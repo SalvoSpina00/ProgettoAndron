@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Conferma</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="this.tipo=='ordine'">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="ion-text-center">
+          Feedback
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row> 
+          <div>
+            Prima di confermare l'arrivo, inserisci un feedback su questo ordine! Facci sapere come ti sei trovato e cosa pensi!
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item>
+      <ion-textarea placeholder="Messaggio..."  maxlength="400" [(ngModel)]="msg"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-col text-center>
+        <rating [(rating)]="valutazione"></rating>
+      </ion-col>
+    </ion-item>
+  </ion-list>
+  
+  <p>{{this.errore}}</p>
+  <ion-button size="small" expand="block" (click)="confermaOrdine(this.data)">
+    Conferma
+  </ion-button>
+</ion-content>
+
+<ion-content *ngIf="this.tipo=='servizio'">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="ion-text-center">
+          Feedback
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <div>
+            Prima di confermare di aver ricevuto il servizio, lascia un messaggio per recensire l'utente che l'ha offerto! Inserisci anche tua valutazione!  
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+ 
+  <ion-list>
+    <ion-item>
+      <ion-textarea placeholder="Messaggio..."  maxlength="400"[(ngModel)]="msg"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-col text-center>
+        <rating [(rating)]="valutazione"></rating>
+      </ion-col>
+    </ion-item>
+  </ion-list>
+  <p>{{this.errore}}</p>
+  <ion-button size="small" expand="block" (click)="servizioEseguito(this.data.id)">
+    Conferma
+  </ion-button>
+</ion-content>

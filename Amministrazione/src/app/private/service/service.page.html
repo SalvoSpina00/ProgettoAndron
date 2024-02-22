@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Approva Servizi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    
+    <ion-card *ngIf="servizi?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Attenzione!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Attualmente non sono presenti servizi da confermare.
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+
+    <ion-card *ngFor="let s of this.servizi">
+      <ion-card-content>
+        <ion-card-subtitle>
+          Inserito da : {{s.nomeUtente}} {{s.cognomeUtente}}
+        </ion-card-subtitle>
+
+        <ion-card-title  class="ion-text-center" >{{ s.nome }}</ion-card-title>
+
+              {{s.descrizione}}
+  
+          <ion-row>
+            <ion-col size="8">
+              Prezzo orario:
+            </ion-col>
+
+            <ion-col>
+                {{s.andron}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="8">
+              Tempo massimo dedicabile (h): 
+            </ion-col>
+
+            <ion-col>
+                {{s.ore}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="8">
+                Giorni minimi di preavviso:
+            </ion-col>
+
+            <ion-col>
+                {{s.preavviso}}
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-button expand = "full" (click) ="acceptService(s.id)">Accetta Servizio</ion-button>
+            </ion-col>
+
+            <ion-col>
+              <ion-button expand = "full" (click) ="refuseService(s.id)">Rifiuta Servizio</ion-button>
+            </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+</ion-content>

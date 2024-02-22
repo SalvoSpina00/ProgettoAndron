@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nuovo abbonamento</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="myContent">
+
+  <ion-list>
+    <ion-card style="background-color:rgb(29, 39, 61)">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Benvenuto!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          In questa pagina potrai inserire gli abbonamenti che saranno acquistabili tramite ANDRON
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+    
+    <ion-img src="{{ imgSrc }}"></ion-img>
+    <ion-button *ngIf="this.plugin.mobile()" id="myButtonYellow" expand="full" (click)="chooseImage()">Scegli immagine</ion-button>
+    <ion-button *ngIf="!this.plugin.mobile()" id="myButtonYellow" expand="full" (click)="f.click()">Scegli immagine</ion-button>
+    <input  class="ion-hide" #f type="file" (change)="chooseImage($event)" id="file-input" accept="image/png, image/jpeg">
+    
+  <form [formGroup]="newAbbonamentoForm" (ngSubmit)="submit()">
+    
+      <ion-item> <!--!Nome-->
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input formControlName="nome" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+
+
+      <ion-item> <!--!Descrizione-->
+        <ion-label position="floating">Descrizione</ion-label>
+        <ion-input formControlName="descrizione" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+   
+
+      <ion-item> <!--!Durata abbonamento-->
+        <ion-label position="floating">Durata abbonamento</ion-label>
+        <ion-input formControlName="durata" autocapitalize inputmode="text" type="number" placeholder="Segli tra 1-15-30 giorni"></ion-input>
+      </ion-item>
+   
+
+      <ion-item> <!--!Costo abbonamento-->
+        <ion-label position="floating">Costo abbonamento</ion-label>
+        <ion-input formControlName="prezzo" autocapitalize inputmode="text" type="number"></ion-input>
+      </ion-item>
+      
+      
+      <p class="error-message">{{this.errore}}</p>
+
+      <ion-button [disabled]="!newAbbonamentoForm.valid" type="submit" expand="block">
+        Registra Abbonamento
+      </ion-button>
+  </form>
+
+
+  </ion-list>
+</ion-content>

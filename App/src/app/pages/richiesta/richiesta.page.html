@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Richiesta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+    <ion-card-subtitle>
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-center">
+            Fornito da:
+          </div>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <div (click)="feedback(servizio?.utente,'utente',servizio?.nomeUtente + ' ' + servizio?.cognomeUtente)">
+            {{servizio?.nomeUtente}} {{servizio?.cognomeUtente}}
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card-subtitle>
+    <ion-card-title>
+      <div class="ion-text-center">
+        {{servizio?.nome}}
+      </div>
+    </ion-card-title>
+    <ion-grid>
+      <ion-row>
+        {{servizio?.descrizione}}
+      </ion-row>
+      
+      <ion-row>
+        <ion-col size="8">
+          Prezzo per ogni ora:
+        </ion-col>
+
+        <ion-col>
+            {{servizio?.andron}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="8">
+          Tempo massimo dedicabile (h): 
+        </ion-col>
+
+        <ion-col>
+            {{servizio?.ore}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="8">
+            Giorni minimi di preavviso:
+        </ion-col>
+
+        <ion-col>
+            {{servizio?.preavviso}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item>
+      <ion-textarea placeholder="Messaggio..."  maxlength="200" [(ngModel)]="msg"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Data del servizio</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" min="2020" max="2025" [(ngModel)]="date"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-input placeholder="Ore di servizio richieste" type="number"  min=0 max=5 [(ngModel)]="ore"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button id="myButtonYellow" expand="full" (click)="richiesta()">Richiedi Servizio</ion-button>
+
+  <p style="color:red">{{ this.errore }}</p>
+</ion-content>
+

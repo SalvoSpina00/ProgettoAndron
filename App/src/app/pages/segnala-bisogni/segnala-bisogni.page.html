@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-text>Segnala Bisogni</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card style="background-color:rgb(29, 39, 61)">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Benvenuto!
+        </div>
+      </ion-card-subtitle>
+      <ion-card-content>
+        In questa pagina potrai segnalare eventuali bisogni, una volta accettati verranno resi disponibili a tutti e chi vorrà potrà occuparsene!
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+  <form [formGroup]="segnalaBisogniForm" (ngSubmit)="submit()">
+    <ion-list>
+    
+      <ion-img src="{{ imgSrc }}"></ion-img>
+      <ion-button *ngIf="this.plugin.mobile()"  id="myButtonYellow" expand="full" (click)="chooseImage()">Inserisci foto</ion-button>
+      <ion-button *ngIf="!this.plugin.mobile()" id="myButtonYellow" expand="full" (click)="f.click()">Inserisci foto</ion-button>
+      <input  class="ion-hide" #f type="file" (change)="chooseImage($event)" id="file-input" accept="image/png, image/jpeg">
+      <ion-item> <!--!Nome-->
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input formControlName="nome" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.nome">
+        <ng-container *ngIf="nome.hasError(error.type) && (nome.dirty || nome.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!Descrizione-->
+        <ion-label position="floating">Descrizione</ion-label>
+        <ion-input formControlName="descrizione" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.descrizione">
+        <ng-container *ngIf="descrizione.hasError(error.type) && (descrizione.dirty || descrizione.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-card *ngIf="this.plugin.mobile()" style="background-color:rgb(29, 39, 61)">
+          <ion-card-content>
+            Se ti trovi sul luogo clicca sul pulsante sottostante per recuperare la posizione!
+          </ion-card-content>
+          <ion-item>
+            <ion-label>Recupera posizione</ion-label>
+            <ion-toggle (ionChange)="getPosition()"></ion-toggle>
+          </ion-item>
+      </ion-card>
+
+
+
+      <ion-item> <!--!Citta-->
+        <ion-label position="floating">Città</ion-label>
+        <ion-input formControlName="citta" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.citta">
+        <ng-container *ngIf="citta.hasError(error.type) && (citta.dirty || citta.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+
+      <ion-item> <!--!Via-->
+        <ion-label position="floating">Via</ion-label>
+        <ion-input formControlName="via" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.via">
+        <ng-container *ngIf="via.hasError(error.type) && (via.dirty || via.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+
+      <ion-button [disabled]="!segnalaBisogniForm.valid" type="submit" expand="block">
+        Segnala Bisogni
+      </ion-button>
+      <p class="error-message">{{this.errore}}</p>
+    </ion-list>
+  </form>
+</ion-content>

@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>i miei servizi</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-list>
+      <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="results?.length==0">
+        <ion-card-header>
+          <ion-card-subtitle>
+            <div class="ion-text-center">
+              Non hai inserito ancora nessun servizio!
+            </div>
+          </ion-card-subtitle>
+          <ion-card-content>
+            Premi il pulsante con il simbolo + per inserire un servizio che sei disposto ad offrire.
+          </ion-card-content>
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card *ngFor="let item of results">
+        <ion-card-content>
+          <ion-card-title color="black" style="font-size:20px" lines="none">{{item.nome}}</ion-card-title>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div>
+                  {{item.descrizione}}
+                </div>
+              </ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col>
+                <div>
+                  Stato:
+                </div>
+              </ion-col>
+
+              <ion-col *ngIf="item.accettato==0 && item.rifiutato==0" size="8">
+                <div class="ion-text-center">
+                  <ion-text style="color: red;">Attesa di accettazione...</ion-text> <ion-icon name="help-circle-outline" (click)="popover(0)"></ion-icon>
+                </div>
+              </ion-col>
+
+              <ion-col *ngIf="item.accettato==1 && item.rifiutato==0" size="8">
+                <div class="ion-text-center">
+                  <ion-text style="color: green;">Online!</ion-text> <ion-icon name="help-circle-outline" (click)="popover(1)"></ion-icon>
+                </div>
+              </ion-col>
+
+              <ion-col *ngIf="item.accettato==0 && item.rifiutato==1" size="8">
+                <div class="ion-text-center">
+                  <ion-text style="color: red;">L'inserimento del servizio è stato rifiutato! Eliminalo per non vederlo più tra quelli inseriti</ion-text>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <div>
+                  <ion-button style="color: red" size="small" expand="block" slot="icon-only" (click)="delete(item.id)">
+                    <ion-icon style="color: red;" ios="ios-trash" md="md-trash"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>  
+
+          </ion-grid>
+      
+      
+        </ion-card-content>
+      </ion-card>
+
+
+
+
+
+
+
+    </ion-list>
+  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color=" console.log(this.data);warning" (click)="openNewService()">
+      <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

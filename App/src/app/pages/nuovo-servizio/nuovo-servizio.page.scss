@@ -1,0 +1,13 @@
+p {
+    color: red;
+    text-align: center;
+}
+ion-item {
+    color: #457c8d;;
+//    --border-color: white; // default underline color
+    --highlight-color-invalid: red; // invalid underline color
+}
+
+ion-item:hover{
+    background-color: #404f79;
+}

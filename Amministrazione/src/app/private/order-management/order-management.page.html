@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Gestione Conflitti Ordini</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngIf="segnalazioniOrdini?.length==0">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Attenzione!
+        </div>
+      </ion-card-subtitle>
+      <ion-card-content>
+        Nessuna segnalazione di ordini.
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+
+
+  <ion-card *ngFor="let s of segnalazioniOrdini">
+    <ion-card-content>
+
+      <ion-card-subtitle>
+        Impresa responsabile dell'ordine: {{s.nome}} <br>
+        Contatti Telefono : {{s.tel}}  Email : {{s.email}} 
+      </ion-card-subtitle>
+      <ion-card-title  class="ion-text-center" >Segnalazione #{{s.id}} relativa all'ordine #{{s.idOrdine}} <br> {{s.causale}}</ion-card-title>
+
+      L'utente {{s.segnalatore.nome}} segnala quanto segue: 
+      {{s.messaggio}} <br>
+
+      <div *ngIf="s.tipoaccount=='utente'">
+        Contatti dell'utente {{s.segnalatore[0].nome}} {{s.segnalatore[0].cognome}} che effettua la segnalazione: <br>
+        Telefono : {{s.segnalatore[0].tel}}  Email : {{s.segnalatore[0].email}} 
+      </div>
+
+      <div *ngIf="s.tipoaccount=='impresa'">
+        Contatti dell'impresa {{s.segnalatore[0].nome}} che effettua la segnalazione: <br>
+        Telefono : {{s.segnalatore[0].tel}}  Email : {{s.segnalatore[0].email}} 
+      </div>
+      
+      <div *ngIf="s.tipoaccount=='ente'">
+        Contatti dell'ets {{s.segnalatore.nome}}  che effettua la segnalazione: <br>
+        Telefono : {{s.segnalatore[0].tel}}  Email : {{s.segnalatore[0].email}} 
+      </div>
+            {{s.descrizioneServizio}}
+
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <ion-button expand = "full" (click) ="rimborsoUtente(s)">Rimborsa Utente</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand = "full" (click) ="concludiOrdine(s)">Concludi Ordine</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

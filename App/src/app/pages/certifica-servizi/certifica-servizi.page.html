@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-text>Richieste</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="servizi?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Attenzione!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Attualmente non sono presenti richieste di certificazione di servizi offerti alla comunità.
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card *ngFor="let s of servizi">
+
+
+
+      <div id="content"  *ngIf="s.richiestaBisogno==1">
+        <ion-row>
+          <ion-col col-6 class="ion-no-padding">
+            <ion-item>
+              <ion-label style="text-align: center;">Prima</ion-label>
+            </ion-item>
+            <ion-img src="{{ s.imgPrima }}"></ion-img>
+          </ion-col>
+          <ion-col col-6 class="ion-no-padding">
+            <ion-item>
+              <ion-label style="text-align: center;">Dopo</ion-label>
+            </ion-item>
+            <ion-img src="{{ s.img }}"></ion-img>
+          </ion-col>
+        </ion-row>
+        <ion-card-header>
+          <ion-card-subtitle>Servizio eseguito da {{s.nome}} {{s.cognome}} <br> in data {{s.data}} alle ore {{s.orario}}</ion-card-subtitle>
+          <ion-card-title>Bisogno: {{s.nomeBisogno}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>
+            Descrizione bisogno: <br> {{s.descrizioneBisogno}}
+          </p>
+          <p>
+            Messaggio del servizio: <br> {{s.messaggio}}
+          </p>
+        </ion-card-content>
+      </div>
+
+      <div id="content"  *ngIf="s.richiestaBisogno==0">
+        <ion-img src="{{ s.img }}"></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>Servizio eseguito da {{s.nome}} {{s.cognome}} <br> in data {{s.data}} alle ore {{s.orario}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          {{s.messaggio}}
+          
+        </ion-card-content>
+      </div>
+
+        <ion-item (click)="accept(s)">
+          <ion-icon name="checkmark" slot="start"></ion-icon>
+          <ion-label>Certifica avvenuto servizio</ion-label>
+        </ion-item>
+
+        <ion-item (click)="refuse(s)">
+          <ion-icon name="close" slot="start"></ion-icon>
+          <ion-label>Rifiuta certificazione</ion-label>
+        </ion-item>
+    </ion-card>
+
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadmore($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Caricamento...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registrazione</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="myContent" class="ion-padding ion-text-center">
+
+  <ion-list id="idListMenu">
+    <ion-list-header>
+     <ion-title> Benvenuto!</ion-title>
+    </ion-list-header>
+    <p style="color: black;">Con quale tipologia  <br> di account vuoi registrarti?</p>
+
+    <ion-item routerLink="/register-utente" routerDirection="forward">
+      Utente
+    </ion-item>
+    
+    <ion-item  routerLink="/register-impresa" routerDirection="forward">
+      Impresa
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+

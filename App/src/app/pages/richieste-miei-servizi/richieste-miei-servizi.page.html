@@ -1,0 +1,170 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Richieste di Servizi
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" style="color: white"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="this.myRichiesteTODO?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Nessuna richiesta di servizi da svolgere!
+          </div>
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+    <ion-card style="background-color: rgb(29, 39, 61);" *ngFor="let item of myRichiesteTODO">
+      
+      <ion-card-content>
+        <ion-card-subtitle style="font-size:10px" class="ion-text-wrap">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div>
+                  Da:
+                </div>
+              </ion-col>
+              <ion-col size="8">
+                <div class="ion-text-center">
+                  {{item.nome}} {{item.cognome}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </ion-card-subtitle>
+        <ion-card-title color="black" lines="none" style="font-size:20px" class="ion-text-center" class="ion-text-wrap">{{item.nomeServizio}}</ion-card-title>
+
+      
+        <ion-grid>
+          <ion-row>
+            <div>
+              {{item.messaggio}}
+            </div>
+          </ion-row>
+        
+          <ion-row >
+            <ion-col style="color: tomato;" class="ion-text-center">
+                Data:
+            </ion-col>
+          </ion-row>
+          <ion-row>
+                La richiesta è prevista per giorno {{item.data}} alle ore {{item.orario}} per {{item.ore}} Ore.
+          </ion-row>
+
+   
+          <ion-row>
+            <ion-col><div class="ion-text-center"  style="color: tomato;">Contatti</div></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div  style="color: tomato;">
+                telefono:
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                {{item.tel}}
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <div  style="color: tomato;" class="ion-text-center">
+                email:
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div>
+                {{item.email}}
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="item.stato=='attesa'">
+            <ion-col>
+              <div class="ion-text-center">
+                <ion-button size="small" expand="block"  (click)="setStato(item.id,'rifiutato')">
+                  Rifiuta
+                </ion-button>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="ion-text-center">
+                <ion-button size="small" expand="block" (click)="setStato(item.id,'accettato')">
+                  Accetta
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="item.stato=='accettato'">
+            <ion-col>
+              <div class="ion-text-center">
+                <ion-button size="small" expand="block" (click)="elimina(item.id)">
+                  Elimina
+                </ion-button>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="ion-text-center">
+                <ion-button size="small" expand="block" (click)="setStato(item.id,'eseguito')">
+                  Eseguito
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row *ngIf="item.stato=='eseguito'">
+            <ion-col>
+              <div>
+                In attesa di conferma. Una volta confermato riceverai gli Andron sul tuo portafoglio
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="item.stato=='eseguito'">
+            <ion-col>
+              <div>
+                <ion-button size="small" expand="block" (click)="segnala(item,'servizio',0)">
+                  Segnala
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="item.stato=='confermato'">
+            <ion-col>
+              <div>
+                Transazione effettuata
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="item.stato=='confermato'">
+            <ion-col>
+              <div class="ion-text-center">
+                <ion-button size="small" expand="block" (click)="setStato(item.id,'concluso')">
+                  Concludi
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      
+      </ion-card-content>
+    </ion-card>
+    
+  </ion-list>
+
+</ion-content>

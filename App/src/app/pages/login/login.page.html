@@ -1,0 +1,29 @@
+<ion-content id="myContent" class="ion-padding ion-text-center">
+  
+  <div id="idDiv">
+    <ion-title>Login</ion-title>
+    <br><br>
+   
+    <form [formGroup]="LoginForm" (ngSubmit)="submit()">
+      <ion-list>
+      
+        <ion-item> <!--!username-->
+          <ion-label position="floating">Username</ion-label>
+          <ion-input formControlName="username" autocapitalize inputmode="text"></ion-input>
+        </ion-item>
+
+
+        <ion-item> <!--!password-->
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="password" autocapitalize type="password" inputmode="text"></ion-input>
+        </ion-item>
+
+        <ion-button id="myButtonYellow" type="submit">Log in</ion-button>
+        <ion-button id="myButtonViolet" routerLink="/register" routerDirection="forward">Register</ion-button>
+        <p id="errorText">{{this.errore}}</p>
+      </ion-list>
+    </form>
+  
+  </div>
+
+</ion-content>

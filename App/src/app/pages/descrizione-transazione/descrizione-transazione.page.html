@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Descrizione</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="ion-text-center">
+          Transazione #{{data?.id}}
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="ion-text-center" style="color: tomato;">
+              Da:
+            </div>
+          </ion-col>
+
+          <ion-col>
+            <div class="ion-text-center" style="color: tomato;">
+              A:
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <div class="ion-text-center">
+              {{data?.emittente}}
+            </div>
+          </ion-col>
+        
+          <ion-col>
+            <div class="ion-text-center">
+              {{data?.ricevente}}
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <div class="ion-text-center" style="color: tomato;">
+              Causale
+            </div>
+          </ion-col>
+        </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <div>
+                {{data?.causale}}
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <div class="ion-text-center" style="color: tomato;">
+                Totale Transazione:
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <div class="ion-text-center">
+                {{data?.andron}} ANDRON
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <div class="ion-text-center" style="color: tomato;">
+                Data di esecuzione:
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <div class="ion-text-center">
+                {{data?.data}}
+              </div>
+            </ion-col>
+          </ion-row>
+        
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

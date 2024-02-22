@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Attivazione Account Utente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+
+    <ion-card *ngIf="utenti?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Attenzione!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Non è presente nessuna registrazione in attesa di essere confermata.
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+
+    <ion-card *ngFor="let u of utenti"  >
+      <ion-img src="{{ u.foto }}"></ion-img>
+      <div id="content">
+      <ion-card-header>
+        <ion-card-subtitle>Utente</ion-card-subtitle>
+        <ion-card-title>{{u.nome}} {{u.cognome}}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        Codice Fiscale: {{u.cf}} <br>
+        telefono: {{u.tel}} <br>
+        email: {{u.email}} <br>
+        Residente a: {{u.stato}}, {{u.regione}} in {{u.via}}
+
+      </ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-button expand = "full" (click) ="activateUser(u.id)">Attiva Account</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand = "full" (click) ="refuseUser(u.id)">Rifiuta Iscrizione</ion-button>
+        </ion-col>
+      </ion-row>
+      
+      </div>
+
+    </ion-card>
+
+
+</ion-content>

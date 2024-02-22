@@ -1,0 +1,127 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>ordini</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-list>
+    
+    <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="data?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Non hai nessun ordine!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Puoi acquistare oggetti usando gli Andron andando nella sezione Cerco Oggetti disponibile nel menù. 
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card *ngFor="let o of this.data">
+      <ion-card-content>
+    
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Ordine #{{o?.id}}
+          </div>
+          
+        </ion-card-subtitle>
+        <ion-card-title style="font-size:20px" class="ion-text-center">{{ o.nomeProdotto}} x {{o.quantita}}</ion-card-title>
+        <ion-grid>
+          <ion-row>
+            <ion-col size=4>
+              <div>
+                <ion-avatar slot="start" class="user-avatar">
+                  <ion-img src="{{ o.img }}"></ion-img>
+                </ion-avatar>
+              </div>
+            </ion-col>
+
+            <ion-col *ngIf="o.checkOrdine==1 && o.confermato==0">
+              <div (click)="popover(-1)" class="ion-text-center" style="color: green;">
+                Ordine evaso! <ion-icon name="information-circle-outline"></ion-icon>
+              </div> 
+            </ion-col>
+
+            <ion-col *ngIf="o.confermato==1">
+              <div (click)="popover(1)" class="ion-text-center" style="color: green;">
+                Ordine confermato! 
+              </div>
+            </ion-col>
+
+            <ion-col *ngIf="o.checkOrdine==0">
+              <div (click)="popover(0)" class="ion-text-center" style="color: red;">
+                In attesa del check da parte dell'azienda...
+              </div>
+            </ion-col>
+              
+          </ion-row>
+          <ion-row *ngIf="o.checkOrdine==1 && o.confermato==0">
+            <ion-col>
+              <div class="ion-text-center"  style="color: tomato;" >
+                Contatti Azienda
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="o.checkOrdine==1 && o.confermato==0">
+            <ion-col>
+              <div  style="color: tomato;">
+                Email
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                {{o.email}}
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="o.checkOrdine==1 && o.confermato==0">
+            <ion-col  style="color: tomato;">
+              <div>
+                Telefono
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                {{o.telefono}}
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="o.checkOrdine==1 && o.confermato==0">
+          
+            <ion-col>
+              <div>
+                <ion-button size="small" expand="block" (click)="segnala(o,'ordine')">
+                  Segnala
+                </ion-button>
+              </div>
+            </ion-col>
+          
+            <ion-col>
+              <div>
+                <ion-button size="small" expand="block" (click)="conferma(o, 'ordine')">
+                  Conferma
+                </ion-button>
+              </div>
+            </ion-col>
+          
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadmore($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Caricamento...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </ion-list>
+
+</ion-content>

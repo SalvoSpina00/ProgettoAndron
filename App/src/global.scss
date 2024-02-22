@@ -1,0 +1,130 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+@import '~animate.css/animate.min.css';
+
+
+
+ion-toolbar{
+    --ion-background-color:#555B6E;
+    color: rgb(254, 254, 255);
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: capitalize;
+}
+
+ion-content{
+    --ion-background-color: #FAF9F9;
+    --color: rgb(35, 38, 41);
+}
+
+ion-item{
+    --background-hover:#D5C7BC
+}
+
+
+//rgb(140, 0, 255);
+ion-menu-button{
+    color: rgb(24, 19, 19);
+}
+ion-back-button{
+    color: rgb(24, 19, 19);
+}
+
+ion-buttons{
+    color: rgb(24, 19, 19);
+}
+ion-card-title{
+    color: rgb(24, 16, 70);
+    text-transform: capitalize;
+}
+p{
+    color: white;
+}
+b{
+    color: rgb(144, 191, 223);
+}
+ion-card-title{
+    color: rgb(99, 211, 231);
+    font-size:20px;
+}
+ion-card-subtitle{
+    color: rgb(112, 108, 146);
+}
+ion-card, ion-card-header, ion-card-content, ion-item, ion-grid, ion-row{
+    background-color: rgb(29, 39, 61);
+}
+ion-card-content{
+    color:rgb(162, 219, 224)
+}
+
+
+
+#myContent{
+    --ion-background-color: #FAF9F9
+}
+#myButtonYellow{
+    --color: white;
+    --background: #0e448b;
+    --background-focused: #0e448b;
+    --background-hover: #0e448b;
+    --color-activated: black;
+    --color-focused: black;
+    --color-hover: black;
+}
+
+#myButtonViolet{
+    --color: white;
+    --background: #7044ff;
+    --background-focused: #633ce0;
+    --background-hover: #633ce0;
+    --color-activated: black;
+    --color-focused: black;
+    --color-hover: black;
+}
+
+#imgpreview{
+    height: 30vh;
+    width: auto;
+    margin: auto;
+    display: block;
+}
+
+.error-message{
+    text-align: center;
+    color: var(--ion-color-danger);
+    padding-left: 20px;
+}
+ion-img{
+    height: auto;
+    width: auto;
+    max-width: 50px;
+    max-height: 50px;
+    margin: auto;
+    display: block;
+    
+}
+
+

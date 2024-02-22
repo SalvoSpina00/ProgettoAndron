@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-text>Richiedi servizi</ion-text>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (keyup.enter)="filter($event)" placeholder="Cerca"></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="filtro==true">
+    <ion-button  size="small" expand="full" (click)="rimuoviFiltri()">Rimuovi filtro</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="servizi?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Attenzione!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Attualmente non sono presenti servizi da poter richiedere.<br>Controlla nei prossimi giorni! 
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+
+    <ion-card *ngFor="let s of this.servizi">
+      <ion-card-content>
+        <ion-card-subtitle>
+            <ion-row>
+              <ion-col>
+                <div class="ion-text-center">
+                  Fornito da:
+                </div>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <div (click)="feedback(s.utente,'utente',s.nomeUtente + ' ' + s.cognomeUtente)">
+                  {{s.nomeUtente}} {{s.cognomeUtente}}
+                </div>
+              </ion-col>
+            </ion-row>
+        </ion-card-subtitle>
+        <ion-card-title  class="ion-text-center"(click)="clickItem(s.id)">{{ s.nome }}</ion-card-title>
+     
+          <ion-row>
+            <ion-col>
+                {{s.descrizione}}
+            </ion-col>
+          </ion-row>
+              
+          <ion-row>
+            <ion-col size="8">
+              Prezzo:
+            </ion-col>
+
+            <ion-col>
+                {{s.andron}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="8">
+              Tempo massimo dedicabile (h): 
+            </ion-col>
+
+            <ion-col>
+                {{s.ore}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="8">
+                Giorni minimi di preavviso:
+            </ion-col>
+
+            <ion-col>
+                {{s.preavviso}}
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-button id="myButtonYellow" size="small" expand="full" (click)="clickItem(s.id)">Richiedi</ion-button>
+            </ion-col>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadmore($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Caricamento...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </ion-list>
+</ion-content>

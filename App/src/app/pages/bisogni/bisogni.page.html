@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-text>Bisogni</ion-text>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="bisogni?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Attenzione!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Attualmente non sono presenti bisogni segnalati, se volessi segnalare un bisogno puoi farlo nella sezione "Segnalazione Bisogni".
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card *ngFor="let b of bisogni">
+      <ion-img src="{{ b.img }}"></ion-img>
+      <div id="content">
+      <ion-card-header>
+        <ion-card-subtitle>Segnalato da {{b["u.nome"]}} {{b.cognome}}</ion-card-subtitle>
+        <ion-card-title>{{b.nome}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{b.descrizione}} <br>
+        Questo bisogno è situato a {{b.citta}} all'indirizzo: {{b.indirizzo}}
+      </ion-card-content>
+      <ion-item (click)="clickItem(b)">
+        <ion-icon name="hand" slot="start"></ion-icon>
+        <ion-label>Offri il tuo aiuto!</ion-label>
+      </ion-item>
+      </div>
+    </ion-card>
+
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadmore($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Caricamento...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
+
+</ion-content>

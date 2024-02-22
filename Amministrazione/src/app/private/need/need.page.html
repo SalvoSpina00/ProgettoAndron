@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Approva Bisogni</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-card *ngIf="bisogni?.length==0">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Attenzione!
+        </div>
+      </ion-card-subtitle>
+      <ion-card-content>
+        Attualmente non sono presenti bisogni segnalati.
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card *ngFor="let b of bisogni">
+    
+    <div  style="text-align: center;"><ion-button *ngIf="b.posizione!='False'"(click)="showMap(b.posizione)">Visualizza posizione sulla mappa</ion-button></div>
+    <ion-img src="{{ b.img }}"></ion-img>
+
+    <div id="content">
+    <ion-card-header>
+      <ion-card-subtitle>Segnalato da {{b["u.nome"]}} {{b.cognome}}</ion-card-subtitle>
+      <ion-card-title>{{b.nome}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{b.descrizione}} <br>
+      Questo bisogno è situato a {{b.citta}} all'indirizzo: {{b.indirizzo}}
+    </ion-card-content>
+
+      <ion-row>
+        <ion-col>
+          <ion-button expand = "full" (click) ="acceptNeed(b.id)">Accetta Bisogno</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand = "full" (click) ="refuseNeed(b.id)">Rifiuta Bisogno</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>portafoglio</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+          
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="ion-text-center">
+          {{budget}} ANDRON
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="ion-text-center">Saldo disponibile al {{today}}.</div>
+    </ion-card-content>
+  </ion-card>
+
+  <div id="transaction">
+    <h5 style="color:black" >Transazioni</h5>
+    <ion-list>
+      <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="transactions?.length==0">
+        <ion-card-header>
+          <ion-card-subtitle>
+            <div class="ion-text-center">
+              Non è presente nessuna transazione.
+            </div>
+          </ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+
+
+      <ion-card *ngFor="let t of transactions; index as i" (click)="clickItem(i)">
+        <ion-card-content>
+          <ion-card-subtitle>
+            <ion-row>
+              <ion-col>
+                <div class="ion-text-center">
+                  Transazione #{{t.id}} <br> 
+                  del {{t.data}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-card-subtitle>
+          <ion-row>
+            <ion-col>
+              <div class="ion-text-center">
+                <ion-icon style="color: green" *ngIf=" t.ricevente == this.idUtente"  ios="ios-add" md="md-add"></ion-icon>
+                <ion-icon style="color: orangered;" *ngIf=" t.emittente == this.idUtente" ios="ios-remove" md="md-remove"></ion-icon>
+                <ion-label>
+                  {{t.andron}} Andron
+                </ion-label>
+              </div>
+            </ion-col>
+          </ion-row>
+            
+        </ion-card-content>
+      </ion-card>
+
+      <ion-infinite-scroll (ionInfinite)="loadmore($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles" loadingText="Caricamento...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
+    </ion-list>
+    
+  </div>
+
+</ion-content>

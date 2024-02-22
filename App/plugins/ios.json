@@ -1,0 +1,44 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-plugin-telerik-imagepicker": {
+      "PHOTO_LIBRARY_USAGE_DESCRIPTION": " ",
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-android-support-gradle-release": {
+      "PACKAGE_NAME": "com.company.Name"
+    },
+    "cordova-plugin-geolocation": {
+      "GPS_REQUIRED": "true",
+      "PACKAGE_NAME": "com.company.Name"
+    }
+  },
+  "dependent_plugins": {}
+}

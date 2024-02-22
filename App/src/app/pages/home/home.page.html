@@ -1,0 +1,401 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Home
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" style="color: white"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="this.utenza=='utente' || this.utenza=='ente'">
+  <h3 class="ion-text-center">Saldo</h3>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+       <div class="ion-text-center">
+         {{budget}} ANDRON
+       </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="ion-text-center">Saldo disponibile al {{today}}.</div>
+    </ion-card-content>
+  </ion-card>
+
+  <h3 class="ion-text-center">News</h3>
+ 
+  <ion-list>
+    <ion-card style="background-color: black;">
+      <ion-card-content>
+        <ion-card-title class="ion-text-center">
+          Titolo News...  
+        </ion-card-title>
+  
+          <ion-row>
+            <ion-col size="4">
+              <div>
+                <ion-avatar slot="start">
+                  <img src="{{img}}">
+                </ion-avatar>
+              </div>
+            </ion-col>
+          
+            <ion-col size="8">
+              <div class="ion-align-items-left">
+                  Intro news....
+              </div>
+            </ion-col>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card style="background-color: black;">
+      <ion-card-content>
+        <ion-card-title class="ion-text-center">
+          Titolo News...  
+        </ion-card-title>
+  
+          <ion-row>
+            <ion-col size="4">
+              <div>
+                <ion-avatar slot="start">
+                  <img src="{{img}}">
+                </ion-avatar>
+              </div>
+            </ion-col>
+          
+            <ion-col size="8">
+              <div class="ion-align-items-left">
+                  Intro news....
+              </div>
+            </ion-col>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>
+
+<ion-content *ngIf="this.utenza=='impresa'">
+  <h3 class="ion-text-center">Ordini da evadere</h3>
+  <ion-card style="background-color: rgb(29, 39, 61)" *ngIf="this.ordini?.length==0">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Nessuna ordine da evadere!
+        </div>
+      </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <ion-list>
+
+    <ion-card style="background-color: rgb(29, 39, 61);" *ngFor="let item of ordini">
+      <div *ngIf="item.user=='utente'">
+
+
+      <ion-card-header >
+        <ion-card-subtitle style="font-size:10px" class="ion-text-wrap">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div class="ion-text-center">
+                  #{{item.id}}
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <div>
+                  Ordine di:
+                </div>
+              </ion-col>
+              <ion-col size="8">
+                <div class="ion-text-center">
+                  {{item.acquirente.nome}} {{item.acquirente.cognome}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-img src="{{ item.img }}"></ion-img>
+        </ion-card-subtitle>
+        <ion-card-title color="black" lines="none" style="font-size:14px" class="ion-text-wrap">{{item.nomeBene}} x {{item.quantita}}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div  style="color: tomato;" class="ion-text-center">
+                Contatti acquirente
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <div  style="color: tomato;">
+                Telefono
+              </div>
+            </ion-col>
+
+            <ion-col>
+              <div>
+                {{item.acquirente.telefono}}
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <div  style="color: tomato;">
+                Email
+              </div>
+            </ion-col>
+          
+            <ion-col>
+              <div>
+                {{item.acquirente.email}}
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <div  style="color: tomato;">
+                Via
+              </div>
+            </ion-col>
+          
+            <ion-col>
+              <div>
+                {{item.acquirente.via}}
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <div  style="color: tomato;">
+               Cap
+              </div>
+            </ion-col>
+          
+            <ion-col>
+              <div>
+                {{item.acquirente.cap}}
+              </div>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col>
+              <div>
+                <ion-button size="small" expand="block" (click)="evadiOrdine(item.id)">
+                  Evadi Ordine
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      </div>
+      <div *ngIf="item.user=='impresa'">
+
+
+        <ion-card-header >
+          <ion-card-subtitle style="font-size:10px" class="ion-text-wrap">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <div class="ion-text-center">
+                    #{{item.id}}
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <div>
+                    Ordine di:
+                  </div>
+                </ion-col>
+                <ion-col size="8">
+                  <div class="ion-text-center">
+                    {{item.acquirente.nome}} {{item.acquirente.cognome}}
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            <ion-img src="{{ item.img }}"></ion-img>
+          </ion-card-subtitle>
+          <ion-card-title color="black" lines="none" style="font-size:14px" class="ion-text-wrap">{{item.nomeBene}} x {{item.quantita}}
+          </ion-card-title>
+        </ion-card-header>
+  
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div  style="color: tomato;" class="ion-text-center">
+                  Contatti acquirente
+                </div>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col>
+                <div  style="color: tomato;">
+                  Telefono
+                </div>
+              </ion-col>
+  
+              <ion-col>
+                <div>
+                  {{item.acquirente.telefono}}
+                </div>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col>
+                <div  style="color: tomato;">
+                  Email
+                </div>
+              </ion-col>
+            
+              <ion-col>
+                <div>
+                  {{item.acquirente.email}}
+                </div>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col>
+                <div  style="color: tomato;">
+                  Via
+                </div>
+              </ion-col>
+            
+              <ion-col>
+                <div>
+                  {{item.acquirente.via}}
+                </div>
+              </ion-col>
+            </ion-row>
+  
+            <ion-row>
+              <ion-col>
+                <div  style="color: tomato;">
+                 Cap
+                </div>
+              </ion-col>
+            
+              <ion-col>
+                <div>
+                  {{item.acquirente.cap}}
+                </div>
+              </ion-col>
+            </ion-row>
+  
+  
+            <ion-row>
+              <ion-col>
+                <div>
+                  <ion-button size="small" expand="block" (click)="evadiOrdine(item.id)">
+                    Evadi Ordine
+                  </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+        </div>
+      <div *ngIf="item.user=='ente'">
+
+
+          <ion-card-header >
+            <ion-card-subtitle style="font-size:10px" class="ion-text-wrap">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <div class="ion-text-center">
+                      #{{item.id}}
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <div>
+                      Ordine di:
+                    </div>
+                  </ion-col>
+                  <ion-col size="8">
+                    <div class="ion-text-center">
+                      {{item.acquirente.nome}}
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              <ion-img src="{{ item.img }}"></ion-img>
+            </ion-card-subtitle>
+            <ion-card-title color="black" lines="none" style="font-size:14px" class="ion-text-wrap">{{item.nomeBene}} x {{item.quantita}}
+            </ion-card-title>
+          </ion-card-header>
+    
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <div  style="color: tomato;" class="ion-text-center">
+                    Contatti acquirente
+                  </div>
+                </ion-col>
+              </ion-row>
+    
+              <ion-row>
+                <ion-col>
+                  <div  style="color: tomato;">
+                    Telefono
+                  </div>
+                </ion-col>
+    
+                <ion-col>
+                  <div>
+                    {{item.acquirente.telefono}}
+                  </div>
+                </ion-col>
+              </ion-row>
+    
+              <ion-row>
+                <ion-col>
+                  <div  style="color: tomato;">
+                    Email
+                  </div>
+                </ion-col>
+              
+                <ion-col>
+                  <div>
+                    {{item.acquirente.email}}
+                  </div>
+                </ion-col>
+              </ion-row>
+  
+    
+              <ion-row>
+                <ion-col>
+                  <div>
+                    <ion-button size="small" expand="block" (click)="evadiOrdine(item.id)">
+                      Evadi Ordine
+                    </ion-button>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+          </div>
+    </ion-card>
+  </ion-list>
+</ion-content>

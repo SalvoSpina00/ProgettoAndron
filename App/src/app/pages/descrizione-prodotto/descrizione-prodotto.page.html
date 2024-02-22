@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>descrizioneProdotto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-content>
+    <ion-card-subtitle>
+
+      <ion-row>
+        <ion-col>
+          <div class="ion-text-center">
+            Fornitore:
+          </div>
+        </ion-col>
+
+        <ion-col>
+          <div class="ion-text-center">
+            {{this.data.fornitore}}
+          </div>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-subtitle>
+
+
+    <ion-row>
+      <ion-col><!--Qui va la foto  {{this.data.foto}}-->
+        <img src="assets/img/andrea.jpg" class="info-img">
+      </ion-col>
+    </ion-row>
+ 
+    <ion-card-title>
+      <div class="ion-text-center">
+        {{this.data.nome}}
+      </div>
+    </ion-card-title>
+
+    <ion-row>
+      {{this.data.descrizione}}
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="5" style="color: tomato;">
+        <div class="ion-text-center">
+          Marca:
+        </div>
+      </ion-col>
+
+      <ion-col>
+        <div class="ion-text-center">
+          {{this.data.marca}}
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="5" style="color: tomato;">
+        <div>
+          Categoria:
+        </div>
+      </ion-col>
+    
+      <ion-col>
+        <div class="ion-text-center">
+          {{this.data.categoria}}
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-center" style="color: tomato;">
+          Prezzo
+        </div>
+      </ion-col>
+    
+      <ion-col>
+        <div class="ion-text-center" style="color: tomato;">
+          Quantita
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-center">
+          {{this.data.andron}}
+        </div>
+      </ion-col>
+    
+      <ion-col>
+        <div class="ion-text-center">
+          {{this.data.quantita}}
+        </div>
+      </ion-col>
+    </ion-row>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Gestione conflitti Servizi</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card  *ngIf="segnalazioniServizi?.length==0">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Attenzione!
+        </div>
+      </ion-card-subtitle>
+      <ion-card-content>
+        Nessuna segnalazione relativa alla richiesta di servizi.
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+
+
+  <ion-card *ngFor="let s of segnalazioniServizi">
+    <ion-card-content>
+      <ion-card-subtitle>
+        Servizio Fornito dall'utente : {{s.nomeEsponente}} {{s.cognomeEsponente}}
+      </ion-card-subtitle>
+
+      <ion-card-title  class="ion-text-center" >Segnalazioni per la richiesta #{{s.idRichiesta}} <br> relativa al servizio {{ s.nomeServizio }}</ion-card-title>
+      
+            {{s.descrizioneServizio}}
+
+      <ion-row *ngFor="let s1 of s.segnalazioni">
+        <ion-col *ngIf="s1.esponente"> Esponente del servizio</ion-col>
+        <ion-col *ngIf="!s1.esponente"> Richiedente del servizio</ion-col>
+        <ion-col size=5>
+        {{s1.nome}} {{s1.cognome}} <br>
+        Messaggio: {{s1.messaggio}} <br>
+        Email: {{s1.email}} <br>
+        Telefono {{s1.tel}}
+        </ion-col>
+        
+        <ion-col  *ngIf="s1.esponente">
+          <ion-button expand = "block" (click) ="pagaEsponente(s)">Paga Esponente</ion-button>
+        </ion-col>
+        <ion-col *ngIf="!s1.esponente" >
+          <ion-button expand = "block" (click) ="rimborsoUtente(s)">Rimborsa Utente</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

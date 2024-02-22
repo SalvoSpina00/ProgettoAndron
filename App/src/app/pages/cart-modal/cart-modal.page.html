@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Carrello</ion-title>
+    <ion-button (click)="this.modalCtrl.dismiss()" fill="clear" slot="start">
+      <ion-icon name="close" slot="start"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    
+    <ion-list>
+      <ion-item *ngFor="let p of this.cartService.getCartElements()">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <b>{{ this.cartService.cart.get(p).name }}</b>
+            </ion-col>
+            <ion-col>
+              <ion-button color="warning" fill="clear" (click)="this.cartService.removeProduct(this.cartService.cart.get(p) )">
+                <ion-icon id="idbutton" ios="ios-remove-circle" md="md-remove-circle"></ion-icon>
+              </ion-button>
+
+              <ion-text style="color:skyblue"class="ion-text-md-justify">{{ this.cartService.cart.get(p).quantity}}</ion-text>
+
+              <ion-button color="warning" fill="clear" (click)="this.cartService.addProduct(this.cartService.cart.get(p))">
+                <ion-icon id="idbutton" ios="ios-add-circle" md="md-add-circle"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="color: skyblue;">
+              <ion-text>{{ this.cartService.cart.get(p).quantity * this.cartService.cart.get(p).cost}} Andron</ion-text>
+            </ion-col>
+            <ion-col class="ion-text-end">
+              <ion-button fill="clear" (click)="this.cartService.deleteProduct(p)">
+                <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-text style="color:tomato">Totale:</ion-text>
+            </ion-col>
+            <ion-col class="ion-text-end" style="color:tomato">
+              <ion-text>{{ this.cartService.getTotal()}} Andron</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+    <div style="text-align: center;">
+      <ion-button id="myButtonYellow" (click)="conferma()">
+        <ion-text>Compra</ion-text>
+      </ion-button>
+    </div>
+
+</ion-content>

@@ -1,0 +1,68 @@
+
+  
+<ion-split-pane contentId="content" >
+    <ion-menu side="start" contentId="content" [hidden]="!currentState">
+
+
+        <ion-header>
+          <ion-toolbar>
+
+            <ion-buttons slot="end">
+              <ion-button (click)="logout()">
+                <ion-icon  name="log-out"></ion-icon> Logout
+              </ion-button>
+            </ion-buttons>
+
+            <ion-title>Menu</ion-title>
+
+          </ion-toolbar>
+        </ion-header>
+
+
+        <ion-content>
+
+          <ion-item routerLink="/private/home"  routerDirection="root" [class.active-item]="selectedPath==='/private/home'">
+              <ion-icon name="home" slot="start"></ion-icon>
+                Home
+          </ion-item>        
+          
+
+          <ion-item (click)="menuAccount === 1 ? menuAccount = 0 : menuAccount = 1; menuConflitti=0 ; menuApprova=0">
+            Gestione Account
+            <ion-icon slot="end" [name]="menuAccount? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+          </ion-item>  
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of gestioneAccount">
+              <ion-item  menuclose [hidden]="!menuAccount" menuClose class="sub-menu"[routerLink]="p.url"  routerDirection="root" [class.active-item]="selectedPath===p.url">
+                  <ion-icon [name]="p.icon" slot="start"></ion-icon>
+                    {{p.title}} 
+              </ion-item>
+          </ion-menu-toggle>
+
+          <ion-item (click)="menuConflitti === 1 ? menuConflitti = 0 : menuConflitti = 1; menuAccount=0 ; menuApprova=0">
+            Gestione Conflitti
+            <ion-icon slot="end" [name]="menuConflitti? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+          </ion-item>  
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of gestioneConflitti">
+              <ion-item  menuclose [hidden]="!menuConflitti" menuClose class="sub-menu"[routerLink]="p.url"  routerDirection="root" [class.active-item]="selectedPath===p.url">
+                  <ion-icon [name]="p.icon" slot="start"></ion-icon>
+                    {{p.title}} 
+              </ion-item>
+          </ion-menu-toggle>
+
+          <ion-item (click)="menuApprova === 1 ? menuApprova = 0 : menuApprova = 1; menuConflitti=0 ; menuAccount=0">
+            Approva
+            <ion-icon slot="end" [name]="menuApprova? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+          </ion-item>  
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of approva">
+              <ion-item  menuclose [hidden]="!menuApprova" menuClose class="sub-menu" [routerLink]="p.url"  routerDirection="root" [class.active-item]="selectedPath===p.url">
+                  <ion-icon [name]="p.icon" slot="start"></ion-icon>
+                    {{p.title}} 
+              </ion-item>
+            </ion-menu-toggle>
+        </ion-content>
+
+
+    </ion-menu>
+
+  <ion-router-outlet id="content"></ion-router-outlet>
+</ion-split-pane>

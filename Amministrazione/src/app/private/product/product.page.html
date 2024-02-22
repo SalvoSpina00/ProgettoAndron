@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Approva Prodotti</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-card  *ngIf="prodotti?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Attenzione!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Attualmente non sono presenti richieste di prodotti da attivare.
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card *ngFor="let p of prodotti">
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Inserito da: {{p.fornitore}}
+        </div>
+      </ion-card-subtitle>
+      <ion-img src="{{ p.img }}"></ion-img>
+      <ion-card-content>
+
+        <ion-card-title class="ion-text-center"> {{p.nome}}</ion-card-title>
+        <ion-row>
+          {{ p.descrizione }}
+        </ion-row>
+        
+        <ion-row>
+          <ion-col>
+            <div style="color: tomato;">
+              Prezzo
+            </div>
+          </ion-col>
+
+          <ion-col>
+            <div class="ion-text-center" >
+              {{ p.andron}}
+          </div>
+          </ion-col>
+
+        </ion-row>
+          
+        <ion-row>
+
+          <ion-col>
+            <div style="color: tomato;">
+              Quantita disponibile:
+            </div>
+          </ion-col>
+
+          <ion-col>
+            <div class="ion-text-center" >
+                {{ p.quantita}}
+            </div>
+          </ion-col>
+
+
+        </ion-row>
+        
+        <ion-row>
+          <ion-col>
+            <ion-button expand = "full" (click) ="acceptProduct(p.id)">Accetta Prodotto</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand = "full" (click) ="refuseProduct(p.id)">Rifiuta Prodotto</ion-button>
+          </ion-col>
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+
+</ion-content>

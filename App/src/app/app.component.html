@@ -1,0 +1,151 @@
+<ion-app>
+    <ion-menu contentId="my-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-item>
+            <ion-avatar slot="start" class="user-avatar">
+              <img src={{userPic}}>
+            </ion-avatar>
+            <ion-label>
+              <ion-text style="color: rgb(29, 39, 61);">
+                <h1><strong>{{ data?.nome }} {{ data?.cognome}}</strong></h1>
+              </ion-text>
+              <ion-text style="color:rgb(26, 47, 92)">
+                <h3>
+                  {{ data?.citta }}, {{ data?.stato}}
+                </h3>
+              </ion-text>
+              <ion-menu-toggle class="mto" auto-hide="false">
+                <a  class="text08" tappable (click)="this.menu.close()" routerLink="/edit-profile" routerDirection="forward">
+                  <ion-text style="color:white">
+                    <ion-icon name="contact"></ion-icon>
+                    <strong>modifica profilo</strong>
+                  </ion-text>
+                </a> <ion-text style="color:white"> | </ion-text> 
+                <a class="text08" tappable (click)="this.menu.close();logout()">
+                  <ion-text style="color:red">
+                    <ion-icon name="log-out"></ion-icon>
+                    <strong>esci</strong>
+                  </ion-text>
+                </a>
+              </ion-menu-toggle>
+            </ion-label>
+          </ion-item>
+        </ion-toolbar>
+      </ion-header>
+
+  <ion-content *ngIf="this.utenza=='utente'">
+        <ion-list id="idListMenu">
+
+          <ion-item (click)="this.menu.close()" routerLink="/home" routerDirection="forward"><ion-icon ios="ios-home" md="md-home"></ion-icon>Home</ion-item>
+      
+          <ion-item (click)="this.menu.close()" routerLink="/wallet" routerDirection="forward"><ion-icon ios="ios-cash" md="md-cash"></ion-icon>Portafoglio</ion-item>
+
+          <ion-item (click)="this.menu.close()" routerLink="/servizi" routerDirection="forward"><ion-icon  ios="ios-hand" md="md-hand"></ion-icon>Offro il mio tempo per...</ion-item>
+
+          <ion-item (click)="this.menu.close()" routerLink="/richieste-miei-servizi" routerDirection="forward"><ion-icon ios="ios-time" md="md-time"></ion-icon>Chi cerca il mio tempo</ion-item>
+
+          <ion-item (click)="isCerca === 1 ? isCerca = 0 : isCerca = 1; isServizi=false; isComunita=false; isOrdini=false">
+            <ion-icon ios="logo-usd" md="logo-usd"></ion-icon>
+            Cerco
+            <ion-icon slot="end" [name]="isCerca? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+          </ion-item>
+          <ion-menu-toggle auto-hide="false">
+              <ion-item menuclose [hidden]="!isCerca" menuClose class="sub-menu" (click)="this.menu.close(); isCerca=false" routerLink="/compra" routerDirection="forward"><ion-icon slot="start"></ion-icon>Oggetti</ion-item>
+
+              <ion-item menuclose [hidden]="!isCerca" menuClose class="sub-menu" (click)="this.menu.close(); isCerca=false" routerLink="/richiedi-servizi" routerDirection="forward"><ion-icon slot="start"></ion-icon>Tempo</ion-item>
+
+              <ion-item menuclose [hidden]="!isCerca" menuClose class="sub-menu" (click)="this.menu.close(); isCerca=false" routerLink="/acquista-abbonamento" routerDirection="forward"><ion-icon slot="start"></ion-icon>Abbonamenti</ion-item>
+          </ion-menu-toggle>
+
+
+
+          <ion-item (click)="isOrdini === 1 ? isOrdini = 0 : isOrdini = 1; isServizi=false; isComunita=false; isCerca=false">
+            <ion-icon ios="ios-basket" md="md-basket"></ion-icon>Le mie richieste in corso<ion-icon slot="end" [name]="isOrdini? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+          </ion-item>
+          <ion-menu-toggle auto-hide="false">
+ 
+              <ion-item menuclose [hidden]="!isOrdini" menuClose class="sub-menu" (click)="this.menu.close(); isOrdini=false" routerLink="/ordini" routerDirection="forward"><ion-icon slot="start"></ion-icon>Oggetti</ion-item>
+
+              <ion-item menuclose [hidden]="!isOrdini" menuClose class="sub-menu" (click)="this.menu.close(); isOrdini=false" routerLink="/richieste-mie" routerDirection="forward"><ion-icon slot="start"></ion-icon>Tempo</ion-item>
+          </ion-menu-toggle>
+
+
+          <ion-item (click)="isComunita === 1 ? isComunita = 0 : isComunita = 1;  isServizi=false; isOrdini=false; isCerca=false">
+            <ion-icon ios="ios-globe" md="md-globe"></ion-icon>Comunità<ion-icon slot="end" [name]="isComunita? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+          </ion-item>
+          <ion-menu-toggle auto-hide="false">
+
+              <ion-item  menuclose [hidden]="!isComunita" menuClose class="sub-menu" (click)="this.menu.close(); isComunita=false" routerLink="/segnala-bisogni" routerDirection="forward">
+                <ion-icon slot="start"></ion-icon>Segnalazione Bisogni</ion-item>
+
+              <ion-item  menuclose [hidden]="!isComunita" menuClose class="sub-menu" (click)="this.menu.close(); isComunita=false" routerLink="/bisogni" routerDirection="forward">
+                <ion-icon slot="start"></ion-icon>Elenco Bisogni</ion-item>
+
+              <ion-item  menuclose [hidden]="!isComunita" menuClose class="sub-menu" (click)="this.menu.close(); isComunita=false" routerLink="/servizi-collettivita" routerDirection="forward">
+                <ion-icon slot="start"></ion-icon>Tempo donato</ion-item>
+
+          </ion-menu-toggle>
+
+          <!--<ion-item (click)="this.menu.close()" routerLink="/setting" routerDirection="forward"> <ion-icon ios="ios-settings" md="md-settings"></ion-icon>Impostazioni</ion-item>-->
+        
+        </ion-list>
+      
+  </ion-content>
+
+  <ion-content *ngIf="this.utenza=='impresa'">
+      <ion-list id="idListMenu">
+
+        <ion-item (click)="this.menu.close()" routerLink="/home" routerDirection="forward"><ion-icon ios="ios-home" md="md-home"></ion-icon>Home</ion-item>
+      
+        <ion-item (click)="this.menu.close()" routerLink="/wallet" routerDirection="forward"><ion-icon ios="ios-cash" md="md-cash"></ion-icon>Portafoglio</ion-item>
+
+        <ion-item (click)="this.menu.close()" routerLink="/compra" routerDirection="forward"><ion-icon ios="logo-usd" md="logo-usd"></ion-icon>Cerco oggetti</ion-item>
+      
+        <ion-item (click)="this.menu.close()" routerLink="/prodotti" routerDirection="forward"><ion-icon ios="ios-archive" md="md-archive"></ion-icon>I miei oggetti</ion-item>
+        
+        <ion-item (click)="this.menu.close()" routerLink="/ordini" routerDirection="forward"><ion-icon ios="ios-basket" md="md-basket"></ion-icon>I miei Ordini</ion-item>
+        
+        <ion-item (click)="this.menu.close()" routerLink="/abbonamenti" routerDirection="forward"><ion-icon ios="ios-hand" md="md-hand"></ion-icon>I miei Abbonamenti</ion-item>
+        
+        <!--<ion-item (click)="this.menu.close()" routerLink="/setting" routerDirection="forward"> <ion-icon ios="ios-settings" md="md-settings"></ion-icon>Impostazioni</ion-item>-->
+      
+      </ion-list>
+  </ion-content>
+
+  <ion-content *ngIf="this.utenza=='ente'">
+    <ion-list id="idListMenu">
+      
+      <ion-item (click)="this.menu.close()" routerLink="/home" routerDirection="forward">
+        <ion-icon ios="ios-home" md="md-home"></ion-icon>
+        Home
+      </ion-item>
+      
+      <ion-item (click)="this.menu.close()" routerLink="/wallet" routerDirection="forward">
+        <ion-icon ios="ios-cash" md="md-cash"></ion-icon>
+        Portafoglio
+      </ion-item>
+
+      <ion-item (click)="this.menu.close()" routerLink="/compra" routerDirection="forward">
+        <ion-icon ios="logo-usd" md="logo-usd"></ion-icon>
+        Cerco oggetti
+      </ion-item>
+
+      <ion-item (click)="this.menu.close()" routerLink="/ordini" routerDirection="forward">
+        <ion-icon ios="ios-basket" md="md-basket"></ion-icon>
+        I miei Ordini
+      </ion-item>
+      
+      <ion-item (click)="this.menu.close()" routerLink="/certifica-servizi" routerDirection="forward">
+        <ion-icon ios="ios-globe" md="md-globe"></ion-icon>
+        Certifica servizi
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+
+    </ion-menu>
+    <ion-router-outlet id="my-content"></ion-router-outlet>
+    
+
+</ion-app>

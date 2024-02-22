@@ -1,0 +1,134 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Le mie richieste
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" style="color: white"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card  style="background-color: rgb(29, 39, 61)" *ngIf="this.myRichieste?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Nessuna tua richiesta di servizi!
+          </div>
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card style="background-color: rgb(29, 39, 61);" *ngFor="let item of myRichieste">
+      <ion-card-content>
+        <ion-card-subtitle style="font-size:10px" class="ion-text-wrap">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <div class="ion-text-center">
+                  Richiesto a:
+                </div>
+              </ion-col>
+              <ion-col size="8">
+                <div class="ion-text-center">
+                  {{item.nome}} {{item.cognome}}
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+    
+        </ion-card-subtitle>
+        <ion-card-title color="black" lines="none" style="font-size:20px" class="ion-text-wrap" class="ion-text-center">
+          {{item.nomeServizio}}
+        </ion-card-title>
+  
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div class="ion-text-center" style="color: tomato;">
+                Stato
+              </div>
+            </ion-col> 
+          </ion-row>
+          <ion-row *ngIf="item.stato=='attesa'">
+            <ion-col>
+              <div class="ion-text-center" (click)="popover(0)">
+                In attesa di accettazione...
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="item.stato=='rifiutato'" (click)="popover(-1)">
+            <ion-col>
+              <div class="ion-text-center">
+                Rifiutato.
+              </div>
+            </ion-col>
+          </ion-row>      
+
+          <ion-row *ngIf="item.stato=='accettato'">
+            <ion-col>
+              <div class="contenuto_home">
+                Il servizio e' stato accettato, quando l'utente avra' eseguito il servizio richiesto potrai confermarlo.
+                Puoi disdire il servizio eliminandolo.
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="(item.stato!='eseguito' && item.stato!='confermato')">
+            <ion-col>
+              <div class="ion-text-center">
+                <ion-button size="small" expand="block" (click)="elimina(item.id)">
+                  Elimina
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="item.stato=='confermato'">
+            <ion-col>
+              <div class="ion-text-center">
+              Una volta che l'altro utente avra' confermato la recezione degli Andron non verra' piu' visualizzato.
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="item.stato=='eseguito'">
+            <ion-col>
+              <div class="ion-text-center" (click)="popover(1)">
+                Eseguito
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="item.stato=='eseguito'">
+
+            <ion-col>
+              <div>
+                <ion-button size="small" expand="block" (click)="segnala(item,'servizio',1)">
+                  Segnala
+                </ion-button>
+              </div>
+            </ion-col>
+
+            <ion-col>
+              <div class="ion-text-center">
+                <ion-button size="small" expand="block" (click)="conferma(item,'servizio')">
+                  Conferma
+                </ion-button>
+              </div>
+            </ion-col>
+
+          </ion-row>
+
+
+
+        </ion-grid>    
+      </ion-card-content>
+    </ion-card>
+
+  </ion-list>
+</ion-content>

@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Approva Abbonamento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card  *ngIf="abbonamenti?.length==0">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Attenzione!
+        </div>
+      </ion-card-subtitle>
+      <ion-card-content>
+        Attualmente non sono presenti richieste di abbonamenti da attivare.
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card *ngFor="let p of abbonamenti">
+    <ion-card-subtitle>
+      <div class="ion-text-center">
+        Inserito da: {{p.fornitore}}
+      </div>
+    </ion-card-subtitle>
+    <ion-img src="{{ p.img }}"></ion-img>
+    <ion-card-content>
+
+      <ion-card-title class="ion-text-center"> {{p.nome}}</ion-card-title>
+      <ion-row>
+        {{ p.descrizione }}
+      </ion-row>
+      
+      <ion-row>
+        <ion-col>
+          <div style="color: tomato;">
+            Prezzo : {{p.prezzo}}
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <div style="color: tomato;">
+            Durata abbonamento : {{p.durata}}
+          </div>
+        </ion-col>
+      </ion-row>
+        
+
+  <ion-row>
+    <ion-col>
+      <ion-button expand = "full" (click) ="acceptSubscription(p.id)">Accetta Abbonamento</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand = "full" (click) ="refuseSubscription(p.id)">Rifiuta Abbonamento</ion-button>
+    </ion-col>
+  </ion-row>
+
+
+</ion-card-content>
+</ion-card>
+
+
+
+
+</ion-content>

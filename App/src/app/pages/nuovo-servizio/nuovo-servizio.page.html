@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>nuovo Servizio</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="myContent">
+
+  <form [formGroup]="newServiceForm" (ngSubmit)="submit()">
+    <ion-list>
+    
+      <ion-item> <!--!Nome-->
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input formControlName="nome" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.nome">
+        <ng-container *ngIf="nome.hasError(error.type) && (nome.dirty || nome.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!Descrizione-->
+        <ion-label position="floating">Descrizione</ion-label>
+        <ion-input formControlName="descrizione" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.descrizione">
+        <ng-container *ngIf="descrizione.hasError(error.type) && (descrizione.dirty || descrizione.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!ore-->
+        <ion-label position="floating">Ore massime dedicabili</ion-label>
+        <ion-input formControlName="ore" autocapitalize inputmode="text" type="number"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.ore">
+        <ng-container *ngIf="ore.hasError(error.type) && (ore.dirty || ore.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!preavviso-->
+        <ion-label position="floating">Giorni di preavviso</ion-label>
+        <ion-input formControlName="preavviso" autocapitalize inputmode="text" type="number"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.preavviso">
+        <ng-container *ngIf="preavviso.hasError(error.type) && (preavviso.dirty || preavviso.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-button [disabled]="!newServiceForm.valid" type="submit" expand="block">
+        Registra Servizio
+      </ion-button>
+      <p class="error-message">{{this.errore}}</p>iso,
+    
+    </ion-list>
+  </form>
+
+</ion-content>

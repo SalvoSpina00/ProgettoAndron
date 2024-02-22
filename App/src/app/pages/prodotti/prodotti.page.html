@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>prodotti</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+
+      <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="products?.length==0">
+        <ion-card-header>
+          <ion-card-subtitle>
+            <div class="ion-text-center">
+              Non hai inserito ancora nessun prodotto!
+            </div>
+          </ion-card-subtitle>
+          <ion-card-content>
+            Premi il pulsante con il simbolo + per inserire un prodotto.
+          </ion-card-content>
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card style="background-color: black;" *ngFor="let p of products">
+        <ion-card-content>
+          <ion-card-title>
+              <div class="ion-text-center">
+                {{ p.nome }}
+              </div>
+            </ion-card-title>
+
+            <ion-img id="imgpreview" src="{{ p.img }}"></ion-img>
+
+            <ion-row>
+                  {{ p.descrizione }}
+            </ion-row>
+          
+        <ion-row>
+          <ion-col size="5" style="color: tomato;">
+            Prezzo:
+          </ion-col>
+          <ion-col>
+            <div class="ion-text-center">
+              {{p.andron}} ANDRON
+            </div>  
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="5"  style="color: tomato;">
+            Quantita:
+          </ion-col>
+          <ion-col *ngIf="p.quantita>0">
+            <div class="ion-text-center">
+              {{p.quantita}}
+            </div>
+          </ion-col>
+          <ion-col *ngIf="p.quantita==0">
+            <div class="ion-text-center" style="color: red;">
+              ESAURITO
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="ion-text-center">
+              Stato
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-text style="color: red;" *ngIf="p.accettato==0 && p.rifiutato==1">Il prodotto è stato rifiutato, eliminalo per non vederlo più tra quelli inseriti </ion-text>
+            <ion-text (click)="popover(0)" style="color: red;" *ngIf="p.accettato==0 && p.rifiutato==0">In attesa di accettazione...  <ion-icon name="help-circle-outline" (click)="popover(0)"></ion-icon></ion-text>
+            <ion-text (click)="popover(1)" style="color: green;" *ngIf="p.accettato==1 && p.rifiutato==0">Disponibile Online!  <ion-icon name="help-circle-outline" (click)="popover(1)"></ion-icon></ion-text> 
+            
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="p.accettato==1">
+            <ion-button (click)="aggiungi(p.id)">
+             Aggiungi
+            </ion-button>
+          </ion-col>
+       
+          <ion-col class="ion-text-right">
+            <ion-button class="ion-float-right" fill="clear" (click)="delete(p.id)">
+              <ion-icon style="color: red;" ios="ios-trash" md="md-trash"></ion-icon>
+            </ion-button>
+          </ion-col>
+
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="warning" (click)="openNewProduct()">
+      <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

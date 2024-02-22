@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-text>Acquista abbonamento</ion-text>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (keyup.enter)="filter($event)" placeholder="Cerca"></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="filtro==true">
+    <ion-button  size="small" expand="full" (click)="rimuoviFiltri()">Rimuovi filtro</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="abbonamenti?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Attenzione!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Attualmente non sono presenti abbonamenti da poter acquistare.<br>Controlla nei prossimi giorni! 
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+
+    <ion-card *ngFor="let b of this.abbonamenti">
+      <ion-card-content>
+        <ion-card-subtitle>
+            <ion-row>
+              <ion-col>
+                <div class="ion-text-center">
+                  Fornito da: {{b.fornitore}}
+                </div>
+              </ion-col>
+              <ion-col class="ion-text-center">
+  
+                  {{b.fortnitore}}
+                
+              </ion-col>
+            </ion-row>
+        </ion-card-subtitle>
+        <ion-card-title  class="ion-text-center">{{ b.nome }}</ion-card-title>
+     
+          <ion-row>
+            <ion-col>
+                {{b.descrizione}}
+            </ion-col>
+          </ion-row>
+              
+          <ion-row>
+            <ion-col size="8">
+              Prezzo:
+            </ion-col>
+
+            <ion-col>
+                {{b.prezzo}}
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col size="8">
+                Durata abbonamento:
+            </ion-col>
+            <ion-col>
+                {{b.durata}}
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-button id="myButtonYellow" size="small" expand="full" (click)="acquista(b)">Acquista</ion-button>
+            </ion-col>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+
+  </ion-list>
+</ion-content>

@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nuovo Prodotto</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="myContent">
+
+  <ion-list>
+    <ion-card style="background-color:rgb(29, 39, 61)">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Benvenuto!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          In questa pagina potrai inserire i beni che saranno acquistabili tramite ANDRON
+        </ion-card-content>
+      </ion-card-header>
+    </ion-card>
+
+    
+    <ion-img src="{{ imgSrc }}"></ion-img>
+    <ion-button *ngIf="this.plugin.mobile()" id="myButtonYellow" expand="full" (click)="chooseImage()">Scegli immagine</ion-button>
+    <ion-button *ngIf="!this.plugin.mobile()" id="myButtonYellow" expand="full" (click)="f.click()">Scegli immagine</ion-button>
+    <input  class="ion-hide" #f type="file" (change)="chooseImage($event)" id="file-input" accept="image/png, image/jpeg">
+    
+    <form [formGroup]="newProductForm" (ngSubmit)="submit()">
+      
+        <ion-item> <!--!Nome-->
+          <ion-label position="floating">Nome</ion-label>
+          <ion-input formControlName="nome" autocapitalize inputmode="text"></ion-input>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.nome">
+          <ng-container *ngIf="nome.hasError(error.type) && (nome.dirty || nome.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+
+        <ion-item> <!--!marca-->
+          <ion-label position="floating">Marca</ion-label>
+          <ion-input formControlName="marca" autocapitalize inputmode="text" ></ion-input>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.marca">
+          <ng-container *ngIf="marca.hasError(error.type) && (marca.dirty || marca.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+  
+        <ion-item> <!--!Descrizione-->
+          <ion-label position="floating">Descrizione</ion-label>
+          <ion-input formControlName="descrizione" autocapitalize inputmode="text"></ion-input>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.descrizione">
+          <ng-container *ngIf="descrizione.hasError(error.type) && (descrizione.dirty || descrizione.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+  
+        <ion-item> <!--!prezzo-->
+          <ion-label position="floating">Prezzo</ion-label>
+          <ion-input formControlName="prezzo" autocapitalize type="number"></ion-input>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.prezzo">
+          <ng-container *ngIf="prezzo.hasError(error.type) && (prezzo.dirty || prezzo.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+     
+        <ion-item> <!--!quantita-->
+          <ion-label position="floating">Quantità</ion-label>
+          <ion-input formControlName="quantita" autocapitalize type="number"></ion-input>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.quantita">
+          <ng-container *ngIf="quantita.hasError(error.type) && (quantita.dirty || quantita.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+      
+        <ion-item> <!--!categoria-->
+          <ion-label position="floating">Categoria</ion-label>
+          <ion-input formControlName="categoria" autocapitalize inputmode="text"></ion-input>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.categoria">
+          <ng-container *ngIf="categoria.hasError(error.type) && (categoria.dirty || categoria.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+        
+        <p class="error-message">{{this.errore}}</p>
+
+        <ion-button [disabled]="!newProductForm.valid" type="submit" expand="block">
+          Registra Prodotto
+        </ion-button>
+    </form>
+
+  </ion-list>
+</ion-content>

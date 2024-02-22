@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Comunità</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="ion-text-center">
+          Benvenuto!
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Qui potrai inserire eventuali servizi offerti alla comunita'. Compilare tutti i campi per mandare la richiesta, una volta verificata verranno caricati dei token sul tuo account.
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-content id="myContent" class="ion-padding ion-text-center">
+    <form [formGroup]="ServizioCollettivitaForm" (ngSubmit)="submit()">
+      <ion-list>
+
+        <ion-img src="{{ imgSrc }}"></ion-img>
+        <ion-button *ngIf="mobile"  id="myButtonYellow" expand="full" (click)="chooseImage()">Inserisci foto</ion-button>
+        <ion-button *ngIf="!mobile" id="myButtonYellow" expand="full" (click)="f.click()">Inserisci foto</ion-button>
+        <input  class="ion-hide" #f type="file" (change)="chooseImage($event)" id="file-input" accept="image/png, image/jpeg">
+
+        <ion-item> 
+          <ion-label position="floating">Descrivi il tuo servizio</ion-label>
+          <ion-input formControlName="description" autocapitalize inputmode="text"></ion-input>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.description">
+          <ng-container *ngIf="description.hasError(error.type) && (description.dirty || description.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+
+        <ion-item> <!--!data-->
+          <ion-label>Data del servizio offerto</ion-label>
+          <ion-input formControlName="data" autocapitalize type="date" inputmode="text"></ion-input>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.data">
+          <ng-container *ngIf="data.hasError(error.type) && (data.dirty || data.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+
+        <ion-item> 
+          <ion-label position="floating">ETS Certificatore</ion-label>
+          <ion-select formControlName="ets" cancelText="Esci" okText="Scegli">
+            <ion-select-option  *ngFor="let i of enti" value={{i.id}}>{{i.nome}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div *ngFor="let error of errorMessages.ets">
+          <ng-container *ngIf="ets.hasError(error.type) && (ets.dirty || ets.touched)">
+            <small class="error-message">{{error.message}}</small>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label>E' un bisogno segnalato</ion-label>
+          <ion-toggle formControlName="bisognoSegnalato"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Bisogni</ion-label>
+          <ion-select formControlName="bisogno" value="{{idBisognoEsterno}}" [disabled]="!bisognoSegnalato.value" cancelText="Esci" okText="Scegli">
+            <ion-select-option *ngFor="let i of bisogni" value={{i?.id}}>{{i?.nome}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <p class="error-message">{{this.errore}}</p>
+        <ion-button [disabled]="!ServizioCollettivitaForm.valid" type="submit" expand="block">
+          Invia
+        </ion-button>
+    </ion-list>
+  </form>
+</ion-content>

@@ -1,0 +1,32 @@
+#myWallet{
+    height: 120px;
+    margin: 30px;
+    background-color: black;
+    border-style: solid;
+    border-color: black;
+    border-width: 0.3px;
+    color: white;
+}
+#myWallet h1{
+    padding-left: 30px;
+}
+#myWallet p{
+    text-align: right;
+    padding-right: 30px;
+    color: yellow;
+}
+
+#transaction h5{
+    text-transform: capitalize;
+    font-weight: bold;
+    color: white;
+    margin-top: 0px;
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+
+
+#transaction ion-col{
+    text-align: center;
+} 

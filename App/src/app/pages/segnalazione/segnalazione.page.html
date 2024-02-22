@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Segnala</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="this.tipo=='ordine'">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="ion-text-center">
+          Attenzione!
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <div>
+            Qui potrai inviare segnalare la mancata ricezione del tuo ordine nella data concordata. E' consigliabile effettuare l'operazione di segnalazione solo se non si si riesce a contattare l'azienda che si occupa del prodotto per piu' di 5 giorni lavorativi per evitare che vi siano segnalazioni precoci 
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item>
+      <ion-textarea placeholder="Messaggio..."  maxlength="500" [(ngModel)]="msg"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <p>{{this.errore}}</p>
+  <ion-button size="small" expand="block" (click)="segnala()">
+    Segnala
+  </ion-button>
+</ion-content>
+
+<ion-content *ngIf="this.tipo=='servizio'">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <div class="ion-text-center">
+          Attenzione
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <div>
+            Qui potrai segnalare la mancata esecuzione di un servizio da parte di un utente o la mancata conferma di un servizio effettivamente svolto.
+            E' consigliabile usufruire di questa opzione se non si riesce a contattare l'utente da segnalare per piu' di 5 giorni lavorativi.
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item>
+      <ion-textarea placeholder="Messaggio..."  maxlength="500"[(ngModel)]="msg"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <p>{{this.errore}}</p>
+  <ion-button size="small" expand="block" (click)="segnala()">
+    Segnala
+  </ion-button>
+</ion-content>

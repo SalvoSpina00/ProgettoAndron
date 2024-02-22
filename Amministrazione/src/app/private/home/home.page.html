@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+  
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Amministrazione Garante Andron
+        </div>
+      </ion-card-subtitle>
+      <ion-card-content>
+        Tramite questo sito potrai gestire l'amministrazione dell'applicazione. <br>
+        Nella sezione sottostante potranno essere modificate le variabili relative alla conversione Andron/Ore e la percentuale di guadagno degli ETS per la certificazione di servizi da parte degli utenti.
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-row>
+
+    <ion-col>
+      <ion-item style="text-align:center" class="ion-align-items-center">
+        <ion-label position="floating">Conversione Andron/Ore</ion-label>
+        <ion-input  [(ngModel)]="andron" autocapitalize type="number"></ion-input>
+        <ion-button expand = "full" (click) ="setSettings('andron')">Aggiorna Conversione</ion-button>
+      </ion-item>
+    </ion-col>
+
+    <ion-col>
+      <ion-item style="text-align:center" class="ion-align-items-center">
+        <ion-label position="floating">Percentuale guadagno ETS</ion-label>
+        <ion-input  [(ngModel)]="percentuale" autocapitalize type="number"></ion-input><br>
+        <ion-button expand = "full" (click) ="setSettings('percentuale')">Aggiorna Percentuale</ion-button>
+      </ion-item>
+    </ion-col>
+
+  </ion-row>
+
+</ion-content>
+
+  

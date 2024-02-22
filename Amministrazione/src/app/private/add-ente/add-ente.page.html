@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Nuovo Ets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="newEnteForm" (ngSubmit)="submit()">
+    <ion-list>
+
+      <ion-item> <!--!username-->
+        <ion-label position="floating">Username (Per il Login)</ion-label>
+        <ion-input formControlName="username" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.username">
+        <ng-container *ngIf="username.hasError(error.type) && (username.dirty || username.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!Nome-->
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input formControlName="nome" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.nome">
+        <ng-container *ngIf="nome.hasError(error.type) && (nome.dirty || nome.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!telefono-->
+        <ion-label position="floating">Telefono</ion-label>
+        <ion-input formControlName="telefono" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.telefono">
+        <ng-container *ngIf="telefono.hasError(error.type) && (telefono.dirty || telefono.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!email-->
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="email" autocapitalize type="email" inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.email">
+        <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!Regione-->
+        <ion-label position="floating">Regione</ion-label>
+        <ion-input formControlName="regione" autocapitalize inputmode="text"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.regione">
+        <ng-container *ngIf="regione.hasError(error.type) && (regione.dirty || regione.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-item> <!--!Città-->
+        <ion-label position="floating">Città</ion-label>
+        <ion-input formControlName="citta" autocapitalize inputmode="citta"></ion-input>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.citta">
+        <ng-container *ngIf="citta.hasError(error.type) && (citta.dirty || citta.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>
+            <div class="ion-text-center">
+              Attenzione!
+            </div>
+          </ion-card-subtitle>
+          <ion-card-content>
+            La password verrà generata automaticamante. Una volta finita la procedura riferire la password che verrà mostrata all'ETS di interesse.
+            <br>
+            Sarà necessario effettuare il cambio della password al primo ingresso all'applicazione.
+          </ion-card-content>
+        </ion-card-header>
+      </ion-card>
+
+
+          <small class="error-message">{{avviso}}</small>
+      <ion-button [disabled]="!newEnteForm.valid" type="submit" expand="block">
+        Crea Ets
+      </ion-button>
+
+  </ion-list>
+</form>
+</ion-content>

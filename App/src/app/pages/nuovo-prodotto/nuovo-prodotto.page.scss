@@ -1,0 +1,24 @@
+p {
+    color: red;
+    text-align: center;
+}
+ion-item {
+    color: rgb(24, 19, 19);
+//    --border-color: white; // default underline color
+    --highlight-color-invalid: red; // invalid underline color
+    --highlight-color-valid: rgb(24, 19, 19); // valid underline color
+//    background-color: rgb(34, 34, 34);
+}
+
+ion-item:hover{
+    background-color: rgb(38, 40, 71);
+}
+
+
+ion-img{
+    height: 30vh;
+    width: auto;
+    margin: auto;
+    display: block;
+    
+}

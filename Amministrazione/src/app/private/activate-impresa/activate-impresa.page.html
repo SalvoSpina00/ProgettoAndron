@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Attivazione Account Impresa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card *ngIf="imprese?.length==0">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <div class="ion-text-center">
+          Attenzione!
+        </div>
+      </ion-card-subtitle>
+      <ion-card-content>
+        Non è presente nessuna registrazione in attesa di essere confermata.
+      </ion-card-content>
+    </ion-card-header>
+  </ion-card>
+
+
+  <ion-card *ngFor="let i of imprese"  >
+    <ion-img src="{{ i.foto }}"></ion-img>
+    <div id="content">
+    <ion-card-header>
+      <ion-card-subtitle>Impresa</ion-card-subtitle>
+      <ion-card-title>{{i.nome}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      Codice Fiscale: {{i.cf}} <br>
+      telefono: {{i.tel}} <br>
+      email: {{i.email}} <br>
+      P. IVA : {{i.iva}} <br>
+      Sede: {{i.stato}}, {{i.regione}} in {{i.via}} <br>
+      CAP: {{i.cap}}
+
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <ion-button expand = "full" (click) ="activateImpresa(i.id)">Attiva Account</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand = "full" (click) ="refuseImpresa(i.id)">Rifiuta Iscrizione</ion-button>
+      </ion-col>
+    </ion-row>
+    
+    </div>
+
+  </ion-card>
+
+
+</ion-content>

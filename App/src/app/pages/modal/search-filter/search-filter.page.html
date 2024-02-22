@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-button (click)="this.modalCtrl.dismiss()">
+            <ion-icon name="close"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-title>
+    	Filtri
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-item>
+    <ion-label><ion-text>Prezzo:</ion-text></ion-label>
+        <ion-range dualKnobs="true" [(ngModel)]="minmaxprice" min="1" max="300" step="5" pin="true">
+          <ion-label slot="start"><ion-text>Minimo</ion-text></ion-label>
+          <ion-label slot="end"><ion-text>Massimo</ion-text></ion-label>
+        </ion-range>
+	</ion-item>
+
+<div style="text-align: center;">
+	<ion-button id="myButtonYellow" (click)="closeModal()">Filtra i risultati</ion-button>
+</div>
+</ion-content>
