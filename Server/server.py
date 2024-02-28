@@ -596,7 +596,7 @@ def mySubsSpecific(id):
         print(e)
         return response, 500
 
-@app.route("/subs", methods=["GET","POST"])
+@app.route("/subs", methods=["GET"])
 @jwt_required()
 def subs():
     response = createResponse("GET")
