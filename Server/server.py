@@ -599,7 +599,7 @@ def mySubsSpecific(id):
 @app.route("/subs", methods=["GET","POST"])
 @jwt_required()
 def subs():
-    response = createResponse("GET, POST")
+    response = createResponse("GET")
     db= DB()
 
     try:
@@ -617,11 +617,7 @@ def subs():
             else:
                 data = query.getSubsFiltered(get_jwt_identity(),request.args)
 
-        elif request.method == "POST": #!! NON CI SONO CONTROLLI SUI DATI INVIATI!!!
             
-            data = query.buySubs(get_jwt_identity(), request.get_json())
-            
-
         print(type(data) is dict and data.get("status", None) == -1)
         if type(data) is dict and data.get("status", None) == -1:
             db.getConnection().rollback()
