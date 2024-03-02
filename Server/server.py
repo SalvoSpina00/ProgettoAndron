@@ -43,6 +43,7 @@ CORS(
         "/subs/mine" : {"origin" : "*"},
         "/subs/mine/*" : {"origins" : "*"},
         "/subs" : {"origins" : "*"},
+        "/subs/*" : {"origins" : "*"},
         #? Orders
         "/orders" : {"origins" : "*"},
         "/orders/*" : {"origins" : "*"},
