@@ -1,5 +1,7 @@
 from pymysql import constants
 import pymysql.cursors
+import datetime
+from dateutil.relativedelta import relativedelta
 from pymysql.constants import CLIENT
 from function import createSalt, getFileEncode
 
@@ -639,15 +641,15 @@ class Query:
 
 #region #! Subs
     def addSubs(self, username, data):
-        #! data -> [nome, durata, descrizione, prezzo] 
+        #! data -> [nome, descrizione, prezzo] 
         self._cursor.execute(
-            "INSERT INTO `Abbonamenti`(`impresa`, `nome`, `descrizione`, `prezzo`, `durata`) VALUES (%s,%s,%s,%s,%s)",
+            "INSERT INTO `Abbonamenti`(`impresa`, `nome`, `descrizione`, `prezzo`) VALUES (%s,%s,%s,%s)",
             (
                 self.getUserId(username),
                 data["nome"],
                 data["descrizione"],
-                data["prezzo"],
-                data["durata"]
+                data["prezzo"]
+                
             ),
         )
         return True
@@ -698,12 +700,25 @@ class Query:
         return self._cursor.fetchall() 
 
 
-    def buySubs(self, username, id, data):
+    def buySubs(self, username, id, data,durata):
         if data is None:
             return False
 
+        dataCorrente = datetime.date.today()
         idUtente = self.getUserId(username)
         spesa = self.getAndroCostFromSubscription(id)
+        
+        if durata == '1' :
+            scadenza = dataCorrente + relativedelta(months=1)
+        elif durata == '3' : 
+            scadenza = dataCorrente + relativedelta(months = 3)
+        elif durata == '6' : 
+            scadenza = dataCorrente + relativedelta(months = 6)
+        elif durata == '12' :
+            scadenza = dataCorrente + relativedelta(months=12)
+        else:
+            scadenza = datetime.date.today()
+   
 
         #! id -> idAbbonamento 
         #! data -> [idAbbonamento, name, prezzo]
@@ -726,7 +741,19 @@ class Query:
                 idImpresa,
                 causale,
             ))
-              
+        transazione = self._cursor.lastrowid
+
+        #!Creo Ordine abbonamento      
+        self._cursor.execute("INSERT INTO OrdiniAbbonamenti (transazione, utente, impresa, abbonamento, durata, scadenza) VALUES (%s, %s, %s, %s, %s, %s)",
+           (                  
+                transazione,
+                idUtente,
+                idImpresa,
+                id,
+                durata,
+                scadenza
+                
+            ))
 
         return True  
    
@@ -739,6 +766,30 @@ class Query:
         return result if result!=None else False
  
     
+#endregion
+
+#region #? Ordersubs
+    def getMyBuySubs(self,username,data):
+        offset=int(data.get("_page"))*int(data.get("_psize"))
+
+        self._cursor.execute("select o.id, o.transazione, o.durata, o.scadenza, o.stato, i.id as nodoImpresa, i.nome, i.tel as telefono , i.email, b.nome as nomeAbbonamento, b.id as idAbbonamento from OrdiniAbbonamenti o JOIN Impresa i on o.impresa=i.id JOIN Abbonamenti b on b.id=o.abbonamento WHERE o.utente=%s ORDER BY o.id DESC LIMIT %s OFFSET %s",
+            (
+                self.getUserId(username),
+                int(data.get("_psize")),
+                offset
+            )
+        )
+        
+        data = self._cursor.fetchall()
+        
+        for order in data:
+            order["img"]= 'data:image/jpeg;base64,'+ str(getFileEncode("subs/",order["idAbbonamento"]))
+        
+        return data
+
+
+
+
 #endregion
 
 #region #? Orders 

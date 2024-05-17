@@ -130,6 +130,10 @@ const routes: Routes = [
     path: 'acquista-abbonamento',
     loadChildren: () => import('./pages/acquista-abbonamento/acquista-abbonamento.module').then( m => m.AcquistaAbbonamentoPageModule)
   },
+  {
+    path: 'abbonamenti-acquistati',
+    loadChildren: () => import('./pages/abbonamenti-acquistati/abbonamenti-acquistati.module').then( m => m.AbbonamentiAcquistatiPageModule)
+  },
 ];
 
 @NgModule({

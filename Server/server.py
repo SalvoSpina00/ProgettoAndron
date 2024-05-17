@@ -44,6 +44,8 @@ CORS(
         "/subs/mine/*" : {"origins" : "*"},
         "/subs" : {"origins" : "*"},
         "/subs/*" : {"origins" : "*"},
+        #? OrderSubs
+        "/ordersubs" : {"origins":"*"},
         #? Orders
         "/orders" : {"origins" : "*"},
         "/orders/*" : {"origins" : "*"},
@@ -652,7 +654,7 @@ def subsSpecific(id):
             data = query.getSubsDetails(id)
 
         elif request.method == "POST" :
-            data = query.buySubs(get_jwt_identity() ,id, request.get_json())
+            data = query.buySubs(get_jwt_identity() ,id, request.get_json(),request.get_json()["durata"])
 
         if data != False:
             db.getConnection().commit()
@@ -769,6 +771,34 @@ def products():
         print(e)
         return response, 500
 #endregion
+
+
+#region #? OrderSubs
+@app.route("/ordersubs", methods=["GET"])
+@jwt_required()
+def myOrdersSubs():
+    response = createResponse("GET")
+    db= DB()
+
+    if not checkData(request.args, validRequest["getMyBuySubs"]):
+        return response, 400
+
+    try:
+        if db.connetti():
+            query=Query(db.getCursor())
+            data = query.getMyBuySubs(get_jwt_identity(), request.args)
+
+            response.set_data(json.dumps({"_msg": data}))
+            return response, 200
+        else:
+            return response, 500
+    except Exception as e:
+        print(e)
+        return response, 500
+
+#endregion
+
+
 
 #region #? Orders
 @app.route("/orders", methods=["GET"])

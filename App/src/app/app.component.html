@@ -58,7 +58,7 @@
               <ion-item menuclose [hidden]="!isCerca" menuClose class="sub-menu" (click)="this.menu.close(); isCerca=false" routerLink="/acquista-abbonamento" routerDirection="forward"><ion-icon slot="start"></ion-icon>Abbonamenti</ion-item>
           </ion-menu-toggle>
 
-
+          <ion-item (click)="this.menu.close()" routerLink="/abbonamenti-acquistati" routerDirection="forward"><ion-icon ios="ios-archive" md="md-archive"></ion-icon>I miei abbonamenti acquistati</ion-item>
 
           <ion-item (click)="isOrdini === 1 ? isOrdini = 0 : isOrdini = 1; isServizi=false; isComunita=false; isCerca=false">
             <ion-icon ios="ios-basket" md="md-basket"></ion-icon>Le mie richieste in corso<ion-icon slot="end" [name]="isOrdini? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>

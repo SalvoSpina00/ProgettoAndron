@@ -64,15 +64,16 @@
             </ion-col>
           </ion-row>
 
+          <ion-item class = "select-container">
+            <ion-label>Durata abbonamento</ion-label>
+            <ion-select class="select-input" (ionChange)="getDurataAbbonamento($event)"> <!--[(ngModel)]="durataAbbonamento" -->
+              <ion-select-option value="1">1 mese</ion-select-option>
+              <ion-select-option value="3">3 mesi</ion-select-option>
+              <ion-select-option value="6">6 mesi</ion-select-option>
+              <ion-select-option value="12">12 mesi</ion-select-option>
+            </ion-select>
+          </ion-item>
 
-          <ion-row>
-            <ion-col size="8">
-                Durata abbonamento:
-            </ion-col>
-            <ion-col>
-                {{b.durata}}
-            </ion-col>
-          </ion-row>
           
           <ion-row>
             <ion-col>

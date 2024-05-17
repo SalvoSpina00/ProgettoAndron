@@ -19,6 +19,7 @@ export class AcquistaAbbonamentoPage {
   psize: number = 5;
   filtro: boolean = false
   termine: string = null;
+  durataAbbonamento: number
   
   constructor(private route: ActivatedRoute, private router: Router, private request : RequestService, private utilities: UtilitiesService) {
       this.idAbbonamento = JSON.parse(this.route.snapshot.paramMap.get("id"))
@@ -77,19 +78,21 @@ filter(event) {
   this.initializeItems()
 }
 
-
+getDurataAbbonamento(event) {
+  this.durataAbbonamento = event.detail.value;
+}
 
 acquista(abbonamento : any ){
   this.utilities.confirmAlert({
     handlerYes:() => { 
-      this.checkout(abbonamento);
+      this.checkout(abbonamento,this.durataAbbonamento);
     },
     header:"Attenzione",
     message:"Vuoi proseguire con l'acquisto?"
   })
 }
 
-async checkout(abbonamento) {
+async checkout(abbonamento, durataAbbonamento) {
   let handler = () =>{
     this.router.navigate(["/home"]);
   }
@@ -122,8 +125,8 @@ this.request.get({
               data:{
                 nome : abbonamento.nome,
                 impresa : abbonamento.impresa,
-                prezzo : abbonamento.prezzo
-
+                prezzo : abbonamento.prezzo,
+                durata: durataAbbonamento
               },
               
               handler:()=>{

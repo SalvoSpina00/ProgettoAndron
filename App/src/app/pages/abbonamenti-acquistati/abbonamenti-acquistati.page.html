@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>I miei Abbonamenti</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    
+    <ion-card style="background-color:rgb(29, 39, 61)" *ngIf="data?.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <div class="ion-text-center">
+            Non hai nessun abbonamento!
+          </div>
+        </ion-card-subtitle>
+        <ion-card-content>
+          Puoi acquistare abbonamenti usando gli Andron andando nella sezione Cerco Abbonamenti disponibile nel menù. 
+        </ion-card-content>   
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card  *ngFor="let p of this.data">
+      <ion-card-content>
+
+        <ion-card-subtitle>
+            <div class="ion-text-center">
+              Abbonamento #{{p?.id}}
+            </div>
+          </ion-card-subtitle>
+
+          <ion-img id="imgpreview" src="{{ p.img }}"></ion-img>
+
+      
+        
+      <ion-row>
+        <ion-col size="5" style="color: tomato;">
+          Durata:
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center">
+            {{p.durata}} MESI/E
+          </div>  
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="5" style="color: tomato;">
+          Scadenza:
+        </ion-col>
+        <ion-col> 
+          <div class="ion-text-center">
+            {{p.scadenza | date: 'dd/MM/yyyy'}}
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="5" style="color: tomato;">
+          Stato:
+        </ion-col>
+        <ion-col>
+          <div class="ion-text-center" [ngStyle]="{'color': p.stato === 1 ? 'green' : 'red'}">
+            {{ p.stato === 1 ? 'Attivo' : 'Scaduto' }}
+          </div>
+        </ion-col>
+      </ion-row>
+
+      
+      
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+
+
+  
+</ion-content>    

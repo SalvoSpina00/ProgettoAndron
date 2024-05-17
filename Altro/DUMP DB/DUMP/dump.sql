@@ -15,6 +15,26 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+
+
+
+DELIMITER //
+
+CREATE EVENT controllo
+ON SCHEDULE EVERY 5 MINUTE
+DO
+BEGIN
+    UPDATE OrdiniAbbonamenti
+    SET stato = 0
+    WHERE scadenza <= NOW() AND stato != 0;
+END;
+//
+
+DELIMITER ;
+
+
+
 --
 -- Table structure for table `Beni`
 --
@@ -310,6 +330,46 @@ INSERT INTO `Ordini` VALUES (17,24,37,38,8,1,1,0,0);
 /*!40000 ALTER TABLE `Ordini` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+
+--
+-- Table structure for table `OrdiniAbbonamenti`
+--
+
+DROP TABLE IF EXISTS `OrdiniAbbonamenti`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `OrdiniAbbonamenti` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `transazione` int unsigned NOT NULL,
+  `utente` int unsigned NOT NULL,
+  `impresa` int unsigned NOT NULL,
+  `abbonamento` int unsigned NOT NULL,
+  `durata` int unsigned NOT NULL,
+  `scadenza` DATE NOT NULL,
+  `stato` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `transazione` (`transazione`),
+  KEY `utente` (`utente`),
+  KEY `impresa` (`impresa`),
+  KEY `abbonamento` (`abbonamento`),
+  CONSTRAINT `OrdiniAbbonamento_ibfk_1` FOREIGN KEY (`transazione`) REFERENCES `Transazioni` (`id`),
+  CONSTRAINT `OrdiniAbbonamento_ibfk_2` FOREIGN KEY (`utente`) REFERENCES `Login` (`id`),
+  CONSTRAINT `OrdiniAbbonamento_ibfk_3` FOREIGN KEY (`impresa`) REFERENCES `Impresa` (`id`),
+  CONSTRAINT `OrdiniAbbonamento_ibfk_4` FOREIGN KEY (`abbonamento`) REFERENCES `Abbonamenti` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `OrdiniAbbonamento`
+--
+
+LOCK TABLES `OrdiniAbbonamenti` WRITE;
+/*!40000 ALTER TABLE `OrdiniAbbonamenti` DISABLE KEYS */;
+INSERT INTO `OrdiniAbbonamenti` VALUES (1,2, 101, 201, 1, 1, '2024-06-27',1),(2,3, 47, 48, 26, 1, '2024-06-27',0),(3,4, 47, 48, 26, 1, '2024-05-14',1);
+/*!40000 ALTER TABLE `OrdiniAbbonamenti` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `Richieste`
 --
@@ -546,7 +606,6 @@ CREATE TABLE `Abbonamenti` (
   `nome` varchar(30) NOT NULL,
   `descrizione` varchar(300) NOT NULL,
   `prezzo` int unsigned NOT NULL,
-  `durata` int NOT NULL,
   `accettato` tinyint(1) NOT NULL DEFAULT '0',
   `rifiutato` tinyint(1) NOT NULL DEFAULT '0',
   `eliminato` tinyint(1) NOT NULL DEFAULT '0',
@@ -562,7 +621,7 @@ CREATE TABLE `Abbonamenti` (
 
 LOCK TABLES `Abbonamenti` WRITE;
 /*!40000 ALTER TABLE `Abbonamenti` DISABLE KEYS */;
-INSERT INTO `Abbonamenti` VALUES (24,38,'Benzinaio','Effettua abbonamento per 1 mese',10,3,0,0,0),(25,40,'Babysitter ','Posso occuparmi dei vostri figli se avete bisogno',20,5,0,0,0);
+INSERT INTO `Abbonamenti` VALUES (24,38,'Benzinaio','Effettua abbonamento per 1 mese',10,0,0,0),(25,40,'Babysitter ','Posso occuparmi dei vostri figli se avete bisogno',20,0,0,0);
 /*!40000 ALTER TABLE `Abbonamenti` ENABLE KEYS */;
 UNLOCK TABLES;
 

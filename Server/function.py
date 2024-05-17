@@ -112,7 +112,6 @@ validRequest = {
         ("nome", True, str, 5, 50),
         ("descrizione", True, str, 5, 500),
         ("prezzo",True, int, 1, 50),
-        ("durata",True, int, 1, 5)
     ],
     "getSubs":[
         ("_page",True),
@@ -121,6 +120,11 @@ validRequest = {
         ("termine",False)
     ],
 
+    #!OrderSubs
+    "getMyBuySubs": [
+        ("_page",True),
+        ("_psize",True)
+    ],
     #!Orders
     "getMyOrders": [
         ("_page",True),
