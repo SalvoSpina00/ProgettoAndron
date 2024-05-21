@@ -652,16 +652,20 @@ class Query:
                 
             ),
         )
-        return True
+        return self._cursor.lastrowid
 
     def getMySubs(self, username):
         self._cursor.execute(
             "SELECT * FROM Abbonamenti WHERE impresa = %s AND eliminato = 0", (self.getUserId(username))
         )
         data = self._cursor.fetchall()
+        
         for sub in data:
-            sub["img"]= 'data:image/jpeg;base64,'+ str(getFileEncode("subs/",sub["id"]))
+            sub["img"]= getFileEncode("subs/",sub["id"])
+            sub["img"]= sub["img"] if sub["img"] != False else None
+
         return data
+    
     
     def deleteSubs(self, username, id):
         self._cursor.execute("UPDATE Abbonamenti SET eliminato = 1 WHERE impresa = %s AND id=%s", (self.getUserId(username),id))
@@ -706,7 +710,8 @@ class Query:
 
         dataCorrente = datetime.date.today()
         idUtente = self.getUserId(username)
-        spesa = self.getAndroCostFromSubscription(id)
+        costo = self.getAndroCostFromSubscription(id)
+        spesa = costo * int(durata)
         
         if durata == '1' :
             scadenza = dataCorrente + relativedelta(months=1)
@@ -718,7 +723,7 @@ class Query:
             scadenza = dataCorrente + relativedelta(months=12)
         else:
             scadenza = datetime.date.today()
-   
+
 
         #! id -> idAbbonamento 
         #! data -> [idAbbonamento, name, prezzo]
@@ -727,37 +732,85 @@ class Query:
         dati = self._cursor.fetchone()      
         idImpresa = dati["impresa"]
         causale = "Acquisto abbonamento -> "+ dati["nome"]
+   
 
-        #!Rimuovi Token da utente
-        self._cursor.execute("UPDATE Saldo SET andron = (andron - %s) WHERE id = %s",(spesa,idUtente))
-        #!Aggiungi Token ad Impresa
-        self._cursor.execute("UPDATE Saldo SET andron = (andron + %s) WHERE id = %s",(spesa,idImpresa))
+        try:
             
-        #!Crea transazione
-        self._cursor.execute("INSERT INTO Transazioni (andron, emittente, ricevente, causale) VALUES (%s,%s,%s,%s)",
-            (
-                spesa,
-                idUtente,
-                idImpresa,
-                causale,
-            ))
-        transazione = self._cursor.lastrowid
+            # Verifica se esiste già un abbonamento attivo per l'utente
+            self._cursor.execute("SELECT id, scadenza, durata FROM OrdiniAbbonamenti WHERE utente = %s AND abbonamento = %s AND scadenza > NOW()", (idUtente, id))
+            ordine_attivo = self._cursor.fetchone()
 
-        #!Creo Ordine abbonamento      
-        self._cursor.execute("INSERT INTO OrdiniAbbonamenti (transazione, utente, impresa, abbonamento, durata, scadenza) VALUES (%s, %s, %s, %s, %s, %s)",
-           (                  
-                transazione,
-                idUtente,
-                idImpresa,
-                id,
-                durata,
-                scadenza
+            if ordine_attivo:
+                # Calcola la nuova scadenza
+                    if durata == '1' :
+                        nuovaScadenza = ordine_attivo["scadenza"] + relativedelta(months=1)
+                    elif durata == '3' : 
+                        nuovaScadenza = ordine_attivo["scadenza"] + relativedelta(months = 3)
+                    elif durata == '6' : 
+                        nuovaScadenza = ordine_attivo["scadenza"] + relativedelta(months = 6)
+                    elif durata == '12' :
+                        nuovaScadenza = ordine_attivo["scadenza"] + relativedelta(months=12)
+                    else:
+                        return False
+
+                    nuova_durata = ordine_attivo["durata"] + int(durata)
+
+                # Aggiorna l'abbonamento esistente
+                    self._cursor.execute("UPDATE OrdiniAbbonamenti SET scadenza = %s, durata = %s, stato =%s WHERE id = %s", (nuovaScadenza,nuova_durata,1,ordine_attivo["id"]))
+
+                #!Crea transazione
+                    self._cursor.execute("INSERT INTO Transazioni (andron, emittente, ricevente, causale) VALUES (%s,%s,%s,%s)",
+                (
+                    spesa,
+                    idUtente,
+                    idImpresa,
+                    causale,
+                 ))
+                    transazione = self._cursor.lastrowid
+            
+            else:
+
+                #!Crea transazione
+                self._cursor.execute("INSERT INTO Transazioni (andron, emittente, ricevente, causale) VALUES (%s,%s,%s,%s)",
+                (
+                    spesa,
+                    idUtente,
+                    idImpresa,
+                    causale,
+                ))
+                transazione = self._cursor.lastrowid
+
+
+                #!Creo Ordine abbonamento      
+                self._cursor.execute("INSERT INTO OrdiniAbbonamenti (transazione, utente, impresa, abbonamento, durata, scadenza) VALUES (%s, %s, %s, %s, %s, %s)",
+                (                  
+                        transazione,
+                        idUtente,
+                        idImpresa,
+                        id,
+                        durata,
+                        scadenza
+                        
+                    ))
+
+
+            #!Rimuovi Token da utente
+            self._cursor.execute("UPDATE Saldo SET andron = (andron - %s) WHERE id = %s",(spesa,idUtente))
+            #!Aggiungi Token ad Impresa
+            self._cursor.execute("UPDATE Saldo SET andron = (andron + %s) WHERE id = %s",(spesa,idImpresa))
+                    
+            
                 
-            ))
+                
+            return True  
+            
 
-        return True  
+        finally:
+            # Chiusura della connessione
+            self._cursor.close()
    
     
+
     def getSubsDetails(self, id):
         self._cursor.execute(
             "SELECT b.*, i.nome as fornitore FROM Abbonamenti b JOIN Impresa i ON i.id=b.impresa WHERE s.id = %s", (id)
@@ -772,7 +825,7 @@ class Query:
     def getMyBuySubs(self,username,data):
         offset=int(data.get("_page"))*int(data.get("_psize"))
 
-        self._cursor.execute("select o.id, o.transazione, o.durata, o.scadenza, o.stato, i.id as nodoImpresa, i.nome, i.tel as telefono , i.email, b.nome as nomeAbbonamento, b.id as idAbbonamento from OrdiniAbbonamenti o JOIN Impresa i on o.impresa=i.id JOIN Abbonamenti b on b.id=o.abbonamento WHERE o.utente=%s ORDER BY o.id DESC LIMIT %s OFFSET %s",
+        self._cursor.execute("SELECT o.id, o.transazione, o.durata, o.scadenza, o.stato, i.id as nodoImpresa, i.nome, i.tel as telefono , i.email, b.nome as nomeAbbonamento, b.id as idAbbonamento FROM OrdiniAbbonamenti o JOIN Impresa i on o.impresa=i.id JOIN Abbonamenti b on b.id=o.abbonamento WHERE o.utente=%s ORDER BY o.id DESC LIMIT %s OFFSET %s",
             (
                 self.getUserId(username),
                 int(data.get("_psize")),
@@ -781,6 +834,7 @@ class Query:
         )
         
         data = self._cursor.fetchall()
+
         
         for order in data:
             order["img"]= 'data:image/jpeg;base64,'+ str(getFileEncode("subs/",order["idAbbonamento"]))

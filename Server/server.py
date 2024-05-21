@@ -562,6 +562,7 @@ def mySubs():
         elif request.method == "POST" and checkData(request.get_json(), validRequest["addSubs"]):
             data = query.addSubs(username, request.get_json())
 
+            
             if not saveFile("subs/", data, request.get_json()["foto"]):
                 return response, 500
 

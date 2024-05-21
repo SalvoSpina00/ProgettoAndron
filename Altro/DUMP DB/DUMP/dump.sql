@@ -364,11 +364,11 @@ CREATE TABLE `OrdiniAbbonamenti` (
 -- Dumping data for table `OrdiniAbbonamento`
 --
 
-LOCK TABLES `OrdiniAbbonamenti` WRITE;
+--LOCK TABLES `OrdiniAbbonamenti` WRITE;
 /*!40000 ALTER TABLE `OrdiniAbbonamenti` DISABLE KEYS */;
-INSERT INTO `OrdiniAbbonamenti` VALUES (1,2, 101, 201, 1, 1, '2024-06-27',1),(2,3, 47, 48, 26, 1, '2024-06-27',0),(3,4, 47, 48, 26, 1, '2024-05-14',1);
+--INSERT INTO `OrdiniAbbonamenti` VALUES (1,2, 101, 201, 1, 1, '2024-06-27',1),(2,3, 47, 48, 26, 1, '2024-06-27',0),(3,4, 47, 48, 26, 1, '2024-05-14',1);
 /*!40000 ALTER TABLE `OrdiniAbbonamenti` ENABLE KEYS */;
-UNLOCK TABLES;
+--UNLOCK TABLES;
 
 --
 -- Table structure for table `Richieste`
