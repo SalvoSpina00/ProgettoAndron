@@ -29,7 +29,7 @@ export class AcquistaAbbonamentoPage {
 
 
 
-initializeItems() {
+initializeItems(add=()=>{}) {
   this.request.get({
     path:"/subs",
 
@@ -41,9 +41,15 @@ initializeItems() {
     },
 
     handler:(response)=>{
-      this.abbonamenti = response["_msg"];
+      if (this.page === 0) {
+        this.abbonamenti = response["_msg"];
+      } else {
+        this.abbonamenti = [...this.abbonamenti, ...response["_msg"]];
+      }
       console.log(this.abbonamenti)  
+      add();
     },
+    
 
     error: ()=>{
       this.utilities.alertError({
@@ -80,6 +86,11 @@ filter(event) {
 
 getDurataAbbonamento(event) {
   this.durataAbbonamento = event.detail.value;
+}
+
+loadmore(event) {
+  this.page++
+  this.initializeItems(()=>{event.target.complete()})
 }
 
 acquista(abbonamento : any ){
